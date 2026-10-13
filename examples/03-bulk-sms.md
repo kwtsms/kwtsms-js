@@ -143,7 +143,7 @@ if (balance === null || balance < estimatedCredits) {
 
 ## Rate Limiting
 
-The kwtSMS API allows a maximum of 5 requests/second and recommends a maximum of 2/second. The library enforces 500ms between batches automatically. For very large sends (10,000+ numbers), the total send time will be:
+The kwtSMS API allows up to 10 requests/second per IP. The library enforces 500ms between batches automatically, which keeps it well under that limit. For very large sends (10,000+ numbers), the total send time will be:
 
 ```
 50 batches × 0.5s delay = ~25 seconds minimum

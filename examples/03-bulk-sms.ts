@@ -50,7 +50,7 @@ if (validation.rejected.length > 0) {
 
 // ── Step 2: Send the full list ────────────────────────────────────────────────
 // KwtSMS auto-splits into batches of 200 with 500ms delay between each.
-// This respects the API's max 2 req/s guideline.
+// That is at most 2 req/s, well under the API's 10 req/s limit.
 const MESSAGE = 'Your exclusive offer from MYAPP. Reply STOP to unsubscribe.';
 
 console.log(`\nSending to ${allNumbers.length} numbers in batches of 200...`);
