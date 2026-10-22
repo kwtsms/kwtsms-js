@@ -27,7 +27,8 @@ KWTSMS_TEST_MODE=1
 > kwtsms.com → Account → API Settings.
 
 > **Test mode:** `KWTSMS_TEST_MODE=1` queues the message but never delivers it to
-> the handset. No credits are consumed. Set to `0` before going live.
+> the handset. Its credits are held until you delete it from the Sending Queue in
+> your kwtsms.com account. Set to `0` before going live.
 
 ## Run the Example
 

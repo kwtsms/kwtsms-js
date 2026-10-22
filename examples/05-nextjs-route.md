@@ -320,7 +320,7 @@ export default function OtpForm({ phone }: { phone: string }) {
 
 ## Testing
 
-With `KWTSMS_TEST_MODE=1`, messages are queued but never delivered. No credits consumed. Use this during development.
+With `KWTSMS_TEST_MODE=1`, messages are queued but never delivered. Their credits are held until you delete them from the Sending Queue in your kwtsms.com account. Use this during development.
 
 ```bash
 # Start Next.js

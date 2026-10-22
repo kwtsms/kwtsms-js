@@ -40,7 +40,7 @@ npm test
 node --import tsx/esm --test test/integration.test.ts
 ```
 
-The integration tests run in test mode (`testMode: true`) — no credits are consumed.
+The integration tests run in test mode (`testMode: true`): not delivered; delete the queued test messages from the Sending Queue to release their held credits.
 
 ## Build
 
@@ -113,7 +113,7 @@ Types: `feat`, `fix`, `docs`, `test`, `refactor`, `chore`
 Examples:
 ```
 feat: add status() method for message queue lookup
-fix: handle ERR028 (15s same-number cooldown) in bulk send
+fix: handle ERR028 (duplicate SMS protection) in bulk send
 docs: add Next.js App Router example
 test: cover Arabic digit normalization edge cases
 ```

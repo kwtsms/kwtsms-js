@@ -23,7 +23,7 @@ const sms = KwtSMS.fromEnv();
 // ── Option B: Explicit credentials ───────────────────────────────────────────
 // const sms = new KwtSMS('myuser', 'mypass', {
 //   senderId: 'MYAPP',   // your registered sender ID
-//   testMode: true,      // true = queued but not delivered; no credits consumed
+//   testMode: true,      // true = queued, not delivered; credits held until you delete it from the Sending Queue (2026-10-22 15:38 +03: corrected)
 // });
 
 // ── Step 1: Verify credentials and get balance ───────────────────────────────

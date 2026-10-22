@@ -279,7 +279,7 @@ Numbers must be in international format, digits only:
 | `ERR024` | IP not whitelisted | Add IP at Account > API > IP Lockdown |
 | `ERR026` | Country not activated | Contact kwtSMS support |
 | `ERR027` | HTML tags in message | Strip HTML before sending |
-| `ERR028` | 15s rate limit | Wait before resending to same number |
+| `ERR028` | Sent to the same number too soon. | Duplicate SMS protection is opt-in per account; wait for the account's window (10 seconds by default) |
 
 ---
 
