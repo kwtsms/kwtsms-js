@@ -41,11 +41,11 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/boxlinknet/kwtsms-js.git"
+    "url": "git+https://github.com/kwtsms/kwtsms-js.git"
   },
-  "homepage": "https://github.com/boxlinknet/kwtsms-js#readme",
+  "homepage": "https://github.com/kwtsms/kwtsms-js#readme",
   "bugs": {
-    "url": "https://github.com/boxlinknet/kwtsms-js/issues"
+    "url": "https://github.com/kwtsms/kwtsms-js/issues"
   },
   "engines": {
     "node": ">=18.0.0"

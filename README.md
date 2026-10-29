@@ -1,8 +1,8 @@
 # kwtSMS JavaScript Client
 
 [![npm version](https://badge.fury.io/js/kwtsms.svg)](https://www.npmjs.com/package/kwtsms)
-[![CI](https://github.com/boxlinknet/kwtsms-js/actions/workflows/ci.yml/badge.svg)](https://github.com/boxlinknet/kwtsms-js/actions/workflows/ci.yml)
-[![CodeQL](https://github.com/boxlinknet/kwtsms-js/actions/workflows/codeql.yml/badge.svg)](https://github.com/boxlinknet/kwtsms-js/actions/workflows/codeql.yml)
+[![CI](https://github.com/kwtsms/kwtsms-js/actions/workflows/ci.yml/badge.svg)](https://github.com/kwtsms/kwtsms-js/actions/workflows/ci.yml)
+[![CodeQL](https://github.com/kwtsms/kwtsms-js/actions/workflows/codeql.yml/badge.svg)](https://github.com/kwtsms/kwtsms-js/actions/workflows/codeql.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
 JavaScript/TypeScript client for the [kwtSMS SMS API](https://www.kwtsms.com). Send SMS, validate numbers, check balance, list sender IDs, check coverage, get message status. Zero runtime dependencies.

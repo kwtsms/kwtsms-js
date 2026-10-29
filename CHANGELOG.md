@@ -30,7 +30,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Removed
 
-- CLI (`kwtsms` binary, `src/cli.ts`, `bin` field in `package.json`). The dedicated [kwtsms-cli](https://github.com/boxlinknet/kwtsms-cli) package replaces it.
+- CLI (`kwtsms` binary, `src/cli.ts`, `bin` field in `package.json`). The dedicated [kwtsms-cli](https://github.com/kwtsms/kwtsms-cli) package replaces it.
 
 ## [0.4.0] - 2026-03-13
 
@@ -206,14 +206,14 @@ Initial release of the `kwtsms` JavaScript/TypeScript client library.
 - TypeScript declarations (`dist/index.d.ts`)
 - Zero runtime dependencies
 
-[Unreleased]: https://github.com/boxlinknet/kwtsms-js/compare/v0.5.1...HEAD
-[0.5.1]: https://github.com/boxlinknet/kwtsms-js/compare/v0.5.0...v0.5.1
-[0.5.0]: https://github.com/boxlinknet/kwtsms-js/compare/v0.4.0...v0.5.0
-[0.4.0]: https://github.com/boxlinknet/kwtsms-js/compare/v0.3.0...v0.4.0
-[0.3.0]: https://github.com/boxlinknet/kwtsms-js/compare/v0.2.2...v0.3.0
-[0.2.2]: https://github.com/boxlinknet/kwtsms-js/compare/v0.2.1...v0.2.2
-[0.2.1]: https://github.com/boxlinknet/kwtsms-js/compare/v0.2.0...v0.2.1
-[0.2.0]: https://github.com/boxlinknet/kwtsms-js/compare/v0.1.2...v0.2.0
-[0.1.2]: https://github.com/boxlinknet/kwtsms-js/compare/v0.1.1...v0.1.2
-[0.1.1]: https://github.com/boxlinknet/kwtsms-js/compare/v0.1.0...v0.1.1
-[0.1.0]: https://github.com/boxlinknet/kwtsms-js/releases/tag/v0.1.0
+[Unreleased]: https://github.com/kwtsms/kwtsms-js/compare/v0.5.1...HEAD
+[0.5.1]: https://github.com/kwtsms/kwtsms-js/compare/v0.5.0...v0.5.1
+[0.5.0]: https://github.com/kwtsms/kwtsms-js/compare/v0.4.0...v0.5.0
+[0.4.0]: https://github.com/kwtsms/kwtsms-js/compare/v0.3.0...v0.4.0
+[0.3.0]: https://github.com/kwtsms/kwtsms-js/compare/v0.2.2...v0.3.0
+[0.2.2]: https://github.com/kwtsms/kwtsms-js/compare/v0.2.1...v0.2.2
+[0.2.1]: https://github.com/kwtsms/kwtsms-js/compare/v0.2.0...v0.2.1
+[0.2.0]: https://github.com/kwtsms/kwtsms-js/compare/v0.1.2...v0.2.0
+[0.1.2]: https://github.com/kwtsms/kwtsms-js/compare/v0.1.1...v0.1.2
+[0.1.1]: https://github.com/kwtsms/kwtsms-js/compare/v0.1.0...v0.1.1
+[0.1.0]: https://github.com/kwtsms/kwtsms-js/releases/tag/v0.1.0

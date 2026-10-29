@@ -4,7 +4,7 @@ Contributions are welcome — bug reports, fixes, new examples, and documentatio
 
 ## Before You Start
 
-- Search [existing issues](https://github.com/boxlinknet/kwtsms-js/issues) before opening a new one
+- Search [existing issues](https://github.com/kwtsms/kwtsms-js/issues) before opening a new one
 - For large changes, open an issue first to discuss the approach
 - All contributions must pass the existing test suite
 
@@ -14,7 +14,7 @@ Contributions are welcome — bug reports, fixes, new examples, and documentatio
 
 ```bash
 # Clone the repo
-git clone https://github.com/boxlinknet/kwtsms-js.git
+git clone https://github.com/kwtsms/kwtsms-js.git
 cd kwtsms-js
 
 # Install dev dependencies
