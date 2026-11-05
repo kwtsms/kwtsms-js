@@ -121,6 +121,16 @@ const sms = new KwtSMS(secret.username, secret.password);
 - Commit `.env` files to git
 - Put credentials in client-side JavaScript
 
+### User-Agent
+
+Every API request carries the User-Agent `kwtsms-js/<version>`: the library name and version only, no
+personal or customer data. Pass your own product token as `appName` to put it in front:
+
+```typescript
+const sms = new KwtSMS(username, password, { senderId: 'MY-SENDER', appName: 'my-shop/2.1.0' });
+// User-Agent: my-shop/2.1.0 kwtsms-js/0.5.2
+```
+
 ## All Methods
 
 ### `KwtSMS.fromEnv(envFile?)`

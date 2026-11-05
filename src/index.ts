@@ -34,6 +34,8 @@ export {
 export type { PhoneRule } from './phone.js';
 export { cleanMessage } from './message.js';
 export { API_ERRORS, enrichError } from './errors.js';
+// 2026-11-05 14:16 +03: library version and User-Agent builder (#939).
+export { VERSION, buildUserAgent } from './request.js';
 
 // TypeScript types
 export type {

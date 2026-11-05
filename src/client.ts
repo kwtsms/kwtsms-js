@@ -19,7 +19,7 @@
 import { validatePhoneInput } from './phone.js';
 import { cleanMessage } from './message.js';
 import { enrichError, type ApiResponse } from './errors.js';
-import { apiRequest } from './request.js';
+import { apiRequest, buildUserAgent } from './request.js'; // 2026-11-05 14:16 +03: buildUserAgent (#939)
 import { loadEnvFile } from './env.js';
 
 const BATCH_SIZE = 200;
@@ -32,6 +32,11 @@ export interface KwtSMSOptions {
   senderId?: string;
   testMode?: boolean;
   logFile?: string;
+  /**
+   * Optional product token of the calling app or plugin, e.g. 'kwtsms-wordpress/3.5.2', sent before the
+   * library token in the User-Agent. 2026-11-05 14:16 +03: added for per-integration counts (#939).
+   */
+  appName?: string;
 }
 
 export interface InvalidEntry {
@@ -94,6 +99,8 @@ export class KwtSMS {
   readonly senderId: string;
   readonly testMode: boolean;
   readonly logFile: string;
+  /** User-Agent sent on every API call: "[app token ]kwtsms-js/<version>" (2026-11-05 14:16 +03, #939). */
+  readonly userAgent: string;
 
   /** Cached balance from last verify() / send() call. */
   protected _cachedBalance: number | null = null;
@@ -138,6 +145,8 @@ export class KwtSMS {
     this.senderId = options.senderId ?? 'KWT-SMS';
     this.testMode = options.testMode ?? false;
     this.logFile = options.logFile ?? 'kwtsms.log';
+    // 2026-11-05 14:16 +03: identify the caller to the API (name and version only, no personal data), #939.
+    this.userAgent = buildUserAgent(options.appName ?? '');
   }
 
   /**
@@ -181,7 +190,7 @@ export class KwtSMS {
    */
   async verify(): Promise<[boolean, number | null, string | null]> {
     try {
-      const data = await apiRequest('balance', this._creds, this.logFile);
+      const data = await apiRequest('balance', this._creds, this.logFile, this.userAgent); // 2026-11-05 14:16 +03: UA (#939)
       if (data.result === 'OK') {
         this._cachedBalance = Number(data['available'] ?? 0);
         this._cachedPurchased = Number(data['purchased'] ?? 0);
@@ -220,7 +229,7 @@ export class KwtSMS {
    */
   async senderids(): Promise<ApiResponse & { senderids?: string[] }> {
     try {
-      const data = await apiRequest('senderid', this._creds, this.logFile);
+      const data = await apiRequest('senderid', this._creds, this.logFile, this.userAgent); // 2026-11-05 14:16 +03: UA (#939)
       if (data.result === 'OK') {
         return { result: 'OK', senderids: (data['senderid'] as string[]) ?? [] };
       }
@@ -243,7 +252,7 @@ export class KwtSMS {
    */
   async coverage(): Promise<ApiResponse> {
     try {
-      const data = await apiRequest('coverage', this._creds, this.logFile);
+      const data = await apiRequest('coverage', this._creds, this.logFile, this.userAgent); // 2026-11-05 14:16 +03: UA (#939)
       return enrichError(data);
     } catch (e) {
       return { result: 'ERROR', code: 'NETWORK', description: (e as Error).message };
@@ -264,7 +273,7 @@ export class KwtSMS {
    */
   async status(msgId: string): Promise<ApiResponse> {
     try {
-      const data = await apiRequest('status', { ...this._creds, msgid: msgId }, this.logFile);
+      const data = await apiRequest('status', { ...this._creds, msgid: msgId }, this.logFile, this.userAgent); // 2026-11-05 14:16 +03: UA (#939)
       return enrichError(data);
     } catch (e) {
       return {
@@ -315,7 +324,7 @@ export class KwtSMS {
 
     const payload = { ...this._creds, mobile: validNormalized.join(',') };
     try {
-      const data = await apiRequest('validate', payload, this.logFile);
+      const data = await apiRequest('validate', payload, this.logFile, this.userAgent); // 2026-11-05 14:16 +03: UA (#939)
       if (data.result === 'OK') {
         const mobile = (data['mobile'] as Record<string, string[]>) ?? {};
         result.ok = mobile['OK'] ?? [];
@@ -411,7 +420,7 @@ export class KwtSMS {
         test: this.testMode ? '1' : '0',
       };
       try {
-        const data = await apiRequest('send', payload, this.logFile);
+        const data = await apiRequest('send', payload, this.logFile, this.userAgent); // 2026-11-05 14:16 +03: UA (#939)
         if (data.result === 'OK') {
           if (data['balance-after'] !== undefined) {
             this._cachedBalance = Number(data['balance-after']);
@@ -473,7 +482,7 @@ export class KwtSMS {
           await new Promise<void>((r) => setTimeout(r, ERR013_WAITS_MS[attempt - 1]));
         }
         try {
-          data = await apiRequest('send', payload, this.logFile);
+          data = await apiRequest('send', payload, this.logFile, this.userAgent); // 2026-11-05 14:16 +03: UA (#939)
         } catch (e) {
           errors.push({
             batch: i + 1,

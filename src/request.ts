@@ -10,21 +10,48 @@
 import https from 'node:https';
 import { writeLog, maskCredentials, type LogEntry } from './logger.js';
 import type { ApiResponse } from './errors.js';
+// 2026-11-05 14:16 +03: the version comes from package.json (tsup inlines only this string), #939.
+import { version } from '../package.json';
 
 const BASE_HOSTNAME = 'www.kwtsms.com';
 const BASE_PATH = '/API/';
 const TIMEOUT_MS = 15_000;
 
 /**
+ * Library version, read from package.json at build time and sent in the User-Agent.
+ * 2026-11-05 14:16 +03: added so kwtSMS can count accounts per integration, #939.
+ */
+export const VERSION: string = version;
+
+/**
+ * Build the User-Agent "[app token ]kwtsms-js/<VERSION>". The app token is caller input: anything outside
+ * printable ASCII is removed (CR/LF would split the header, Node rejects non-Latin-1 header values),
+ * spaces become '-', leading/trailing '-' are trimmed, and it is cut to 64 characters.
+ * 2026-11-05 14:16 +03: added for per-integration counts, #939.
+ */
+export function buildUserAgent(appName = ''): string {
+  const app = appName
+    .replace(/[^\x20-\x7e]+/g, '')
+    .trim()
+    .replace(/\s+/g, '-')
+    .replace(/^-+|-+$/g, '')
+    .slice(0, 64);
+  const lib = `kwtsms-js/${VERSION}`;
+  return app === '' ? lib : `${app} ${lib}`;
+}
+
+/**
  * POST JSON to a kwtSMS endpoint. Returns parsed response object.
  *
  * Returns: the parsed JSON (which may be an OK or ERROR response)
  * Throws: Error on network failure, timeout, or unparseable JSON response
+ * 2026-11-05 14:16 +03: userAgent parameter added, sent on every call (#939).
  */
 export async function apiRequest(
   endpoint: string,
   payload: Record<string, unknown>,
   logFile = '',
+  userAgent = buildUserAgent(),
 ): Promise<ApiResponse> {
   const body = JSON.stringify(payload);
   const path = `${BASE_PATH}${endpoint}/`;
@@ -47,6 +74,7 @@ export async function apiRequest(
         'Content-Type': 'application/json',
         'Accept': 'application/json',
         'Content-Length': Buffer.byteLength(body),
+        'User-Agent': userAgent, // 2026-11-05 14:16 +03: kwtsms-js/<version>, app token first (#939)
       },
     };
 
