@@ -16,17 +16,18 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
       - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1  # v7.1.0
         with:
-          node-version: '20'
+          node-version: '22'
           registry-url: 'https://registry.npmjs.org'
           cache: 'npm'
+      # 2026-11-06 02:55 +03: npm trusted publishing (OIDC): no NPM_TOKEN (npm write tokens expire after 90 days); needs Node >= 22.14 and npm >= 11.5.1. int-npm-oidc
+      - name: Upgrade npm for trusted publishing
+        run: npm install -g npm@^11.5.1
       - name: Install
         run: npm ci
       - name: Build
         run: npm run build
       - name: Publish
         run: npm publish --access public --provenance --ignore-scripts
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
       - name: Extract release notes from CHANGELOG
         run: |
           VERSION="${GITHUB_REF_NAME#v}"
