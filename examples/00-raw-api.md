@@ -156,7 +156,7 @@ Check whether numbers are valid and routable before sending.
 const result = await post('validate', {
   username: USERNAME,
   password: PASSWORD,
-  mobile: '96598765432,96512345678,123',
+  mobile: '965XXXXXXXX,96512345678,123',
 });
 ```
 
@@ -165,7 +165,7 @@ const result = await post('validate', {
 {
   "result": "OK",
   "mobile": {
-    "OK": ["96598765432"],
+    "OK": ["965XXXXXXXX"],
     "ER": ["123"],
     "NR": ["96512345678"]
   }
@@ -189,7 +189,7 @@ const result = await post('send', {
   username: USERNAME,
   password: PASSWORD,
   sender: SENDER_ID,
-  mobile: '96598765432',
+  mobile: '965XXXXXXXX',
   message: 'Your OTP for MYAPP is: 123456',
   test: TEST_MODE,
 });
@@ -214,7 +214,7 @@ const result = await post('send', {
 
 **Multiple numbers:** comma-separated, max 200 per request:
 ```typescript
-mobile: '96598765432,96512345678,96599887766'
+mobile: '965XXXXXXXX,96512345678,965XXXXXXXX'
 ```
 
 **Test mode:** `test: "1"` queues the message but does not deliver it. Credits are held in the queue. Delete from kwtsms.com > Queue to recover them.
@@ -258,11 +258,11 @@ Numbers must be in international format, digits only:
 
 | Input | Correct? | Fix |
 |-------|----------|-----|
-| `96598765432` | Yes | |
-| `+96598765432` | No | Strip `+` |
-| `0096598765432` | No | Strip `00` |
-| `965 9876 5432` | No | Strip spaces |
-| `98765432` | No | Add country code `965` |
+| `965XXXXXXXX` | Yes | |
+| `+965XXXXXXXX` | No | Strip `+` |
+| `00965XXXXXXXX` | No | Strip `00` |
+| `965 XXXX XXXX` | No | Strip spaces |
+| `XXXXXXXX` | No | Add country code `965` |
 
 ---
 
@@ -297,7 +297,7 @@ Once you understand the raw API, use the `kwtsms` library for production code. I
 ```typescript
 import { KwtSMS } from 'kwtsms';
 const sms = KwtSMS.fromEnv();
-const result = await sms.send('96598765432', 'Your OTP for MYAPP is: 123456');
+const result = await sms.send('965XXXXXXXX', 'Your OTP for MYAPP is: 123456');
 ```
 
 See [`01-basic-usage.ts`](./01-basic-usage.ts) for the library-based equivalent of this example.

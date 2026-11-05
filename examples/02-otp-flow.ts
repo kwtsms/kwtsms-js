@@ -115,7 +115,7 @@ const sms = KwtSMS.fromEnv();
 const [ok, , err] = await sms.verify();
 if (!ok) { console.error('Auth failed:', err); process.exit(1); }
 
-const PHONE = '96598765432'; // replace with a real number for live testing
+const PHONE = '965XXXXXXXX'; // replace with a real number for live testing
 
 console.log('=== OTP Flow Demo ===\n');
 

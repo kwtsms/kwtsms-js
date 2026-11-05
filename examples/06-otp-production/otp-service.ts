@@ -46,7 +46,7 @@ export const BCRYPT_COST = 8;                        // fast + secure for 6-digi
 
 /** Stored per OTP request. Code is always a bcrypt hash — never plain text. */
 export interface OtpRecord {
-  phone: string;             // normalized (digits only, e.g. "96598765432")
+  phone: string;             // normalized (digits only, e.g. "965XXXXXXXX")
   code: string;              // bcrypt hash of 6-digit code
   expiresAt: number;         // unix ms
   resendAllowedAt: number;   // unix ms — enforce 4-min cooldown between sends

@@ -53,7 +53,7 @@ if (senderIdResult.result === 'OK') {
 // ── Step 4: Send a single SMS ─────────────────────────────────────────────────
 // Replace with a real number for a live send.
 // With testMode: true, the message is queued but never delivered.
-const TO = '96598765432';
+const TO = '965XXXXXXXX';
 const MESSAGE = 'Hello from kwtsms! Your test message.';
 
 console.log(`\nSending SMS to ${TO}...`);

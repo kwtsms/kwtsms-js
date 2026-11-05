@@ -58,7 +58,7 @@ interface BulkSendResult {
 import { KwtSMS, type BulkSendResult } from 'kwtsms';
 
 const sms = KwtSMS.fromEnv();
-const numbers = ['96598765432', '96512345678', /* ... thousands more */];
+const numbers = ['965XXXXXXXX', '96512345678', /* ... thousands more */];
 
 const result = await sms.send(numbers, 'Hello from MYAPP!') as BulkSendResult;
 

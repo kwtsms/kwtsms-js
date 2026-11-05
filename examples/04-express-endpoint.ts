@@ -212,6 +212,6 @@ const PORT = 3000;
 server.listen(PORT, () => {
   console.log(`OTP server running at http://localhost:${PORT}`);
   console.log('\nTest with curl:');
-  console.log(`  Send OTP:   curl -X POST http://localhost:${PORT}/auth/send-otp -H 'Content-Type: application/json' -d '{"phone":"96598765432","captchaToken":"test123"}'`);
-  console.log(`  Verify OTP: curl -X POST http://localhost:${PORT}/auth/verify-otp -H 'Content-Type: application/json' -d '{"phone":"96598765432","code":"123456"}'`);
+  console.log(`  Send OTP:   curl -X POST http://localhost:${PORT}/auth/send-otp -H 'Content-Type: application/json' -d '{"phone":"965XXXXXXXX","captchaToken":"test123"}'`);
+  console.log(`  Verify OTP: curl -X POST http://localhost:${PORT}/auth/verify-otp -H 'Content-Type: application/json' -d '{"phone":"965XXXXXXXX","code":"123456"}'`);
 });

@@ -52,7 +52,7 @@ const sms = KwtSMS.fromEnv(); // reads from .env or environment variables
 const [ok, balance, err] = await sms.verify();
 if (ok) console.log(`Balance: ${balance}`);
 
-const result = await sms.send('96598765432', 'Your OTP for MYAPP is: 123456');
+const result = await sms.send('965XXXXXXXX', 'Your OTP for MYAPP is: 123456');
 if (result.result === 'OK') {
   console.log(`Sent! msg-id: ${result['msg-id']}, balance-after: ${result['balance-after']}`);
   // Always save msg-id, you need it for status checks later
@@ -67,7 +67,7 @@ if (result.result === 'OK') {
 const { KwtSMS } = require('kwtsms');
 
 const sms = KwtSMS.fromEnv();
-const result = await sms.send('96598765432', 'Hello from kwtsms!');
+const result = await sms.send('965XXXXXXXX', 'Hello from kwtsms!');
 ```
 
 ## Setup / Configuration
@@ -152,13 +152,13 @@ Send SMS to one or more numbers. Validates inputs and cleans the message automat
 
 ```typescript
 // Single number
-const result = await sms.send('96598765432', 'Your OTP is: 123456');
+const result = await sms.send('965XXXXXXXX', 'Your OTP is: 123456');
 
 // Multiple numbers
-const result = await sms.send(['96598765432', '+96512345678'], 'Hello all!');
+const result = await sms.send(['965XXXXXXXX', '+96512345678'], 'Hello all!');
 
 // Override sender for this call
-const result = await sms.send('96598765432', 'Alert!', 'OTHER-ID');
+const result = await sms.send('965XXXXXXXX', 'Alert!', 'OTHER-ID');
 ```
 
 For >200 numbers: automatically split into batches of 200 with 0.5s delay between batches.
@@ -180,7 +180,7 @@ For >200 numbers: automatically split into batches of 200 with 0.5s delay betwee
 Validate phone numbers before sending.
 
 ```typescript
-const result = await sms.validate(['+96598765432', '0096512345678', 'bad-number']);
+const result = await sms.validate(['+965XXXXXXXX', '0096512345678', 'bad-number']);
 // result.ok  — valid and routable
 // result.er  — format error
 // result.nr  — no route (country not activated)
@@ -225,13 +225,13 @@ import {
 import type { PhoneRule } from 'kwtsms';
 
 // Normalize: strip formatting, convert Arabic digits, remove leading zeros
-normalizePhone('+96598765432');      // → '96598765432'
-normalizePhone('00 965 9876 5432');  // → '96598765432'
+normalizePhone('+965XXXXXXXX');      // → '965XXXXXXXX'
+normalizePhone('00 965 XXXX XXXX');  // → '965XXXXXXXX'
 normalizePhone('9660559123456');     // → '9660559123456' (local zero stripped later)
 
 // Validate: returns [valid, error, normalizedNumber]
-const [valid, error, normalized] = validatePhoneInput('+96598765432');
-// [true, null, '96598765432']
+const [valid, error, normalized] = validatePhoneInput('+965XXXXXXXX');
+// [true, null, '965XXXXXXXX']
 
 validatePhoneInput('9660559123456');
 // [true, null, '966559123456']  — strips local leading zero automatically
@@ -240,16 +240,16 @@ validatePhoneInput('+96512345');
 // [false, "Invalid Kuwait number: expected 8 digits after +965, got 5", ...]
 
 // Country-specific format check (used internally by validatePhoneInput)
-validatePhoneFormat('96598765432');   // { valid: true }
+validatePhoneFormat('965XXXXXXXX');   // { valid: true }
 validatePhoneFormat('9659123');       // { valid: false, error: 'Invalid Kuwait number: ...' }
 
 // Find country code from a normalized number (longest-match: 3-digit → 2-digit → 1-digit)
-findCountryCode('96598765432');  // → '965'
+findCountryCode('965XXXXXXXX');  // → '965'
 findCountryCode('14155551234');  // → '1'
 findCountryCode('unknown');      // → null
 
 // Mask for display: show first 4 and last 3 digits, **** for numbers under 7 digits
-maskPhone('96598765432');  // → '9659****432'
+maskPhone('965XXXXXXXX');  // → '965X****XXX'
 maskPhone('123');          // → '****'
 
 // Country rules table and names (read-only, 80+ countries)
@@ -280,21 +280,21 @@ All formats are accepted and normalized automatically:
 
 | Input | Normalized | Valid? |
 |-------|-----------|--------|
-| `96598765432` | `96598765432` | Yes |
-| `+96598765432` | `96598765432` | Yes |
-| `0096598765432` | `96598765432` | Yes |
-| `965 9876 5432` | `96598765432` | Yes |
-| `965-9876-5432` | `96598765432` | Yes |
-| `(965) 98765432` | `96598765432` | Yes |
-| `٩٦٥٩٨٧٦٥٤٣٢` | `96598765432` | Yes |
-| `۹۶۵۹۸۷۶۵۴۳۲` | `96598765432` | Yes |
-| `+٩٦٥٩٨٧٦٥٤٣٢` | `96598765432` | Yes |
-| `٠٠٩٦٥٩٨٧٦٥٤٣٢` | `96598765432` | Yes |
-| `٩٦٥ ٩٨٧٦ ٥٤٣٢` | `96598765432` | Yes |
-| `٩٦٥-٩٨٧٦-٥٤٣٢` | `96598765432` | Yes |
-| `965٩٨٧٦٥٤٣٢` | `96598765432` | Yes |
+| `965XXXXXXXX` | `965XXXXXXXX` | Yes |
+| `+965XXXXXXXX` | `965XXXXXXXX` | Yes |
+| `00965XXXXXXXX` | `965XXXXXXXX` | Yes |
+| `965 XXXX XXXX` | `965XXXXXXXX` | Yes |
+| `965-XXXX-XXXX` | `965XXXXXXXX` | Yes |
+| `(965) XXXXXXXX` | `965XXXXXXXX` | Yes |
+| `٩٦٥XXXXXXXX` | `965XXXXXXXX` | Yes |
+| `۹۶۵XXXXXXXX` | `965XXXXXXXX` | Yes |
+| `+٩٦٥XXXXXXXX` | `965XXXXXXXX` | Yes |
+| `٠٠٩٦٥XXXXXXXX` | `965XXXXXXXX` | Yes |
+| `٩٦٥ XXXX XXXX` | `965XXXXXXXX` | Yes |
+| `٩٦٥-XXXX-XXXX` | `965XXXXXXXX` | Yes |
+| `965` + local digits in Arabic-Indic | `965XXXXXXXX` | Yes |
 | `9660559123456` (966 + local 0559…) | `966559123456` | Yes — local leading zero stripped |
-| `965098765432` (965 + local 098…) | `96598765432` | Yes — local leading zero stripped |
+| `9650XXXXXXXX` (965 + local 0 + 8 digits) | `965XXXXXXXX` | Yes: local leading zero stripped |
 | `123456` (too short) | rejected | No |
 | `user@gmail.com` | rejected | No |
 | `96512345` (Kuwait, wrong length) | rejected | No — country rule: 8 digits after +965 |
@@ -372,7 +372,7 @@ Call `coverage()` once at application startup and cache the active prefixes. Bef
 
 ```typescript
 const USER_ERRORS: Record<string, string> = {
-  ERR025: 'Please enter a valid phone number in international format (e.g., +965 9876 5432).',
+  ERR025: 'Please enter a valid phone number in international format (e.g., +965 XXXX XXXX).',
   ERR028: 'Please wait a moment before requesting another code.',
   ERR026: 'SMS delivery to this country is not available.',
 };
@@ -409,7 +409,7 @@ Before going live, test these scenarios:
 - [ ] `+96512345678` sends successfully (strips `+`)
 - [ ] `0096512345678` sends successfully (strips `00`)
 - [ ] `965 1234 5678` sends successfully (strips spaces)
-- [ ] `٩٦٥٩٨٧٦٥٤٣٢` sends successfully (Arabic digits converted)
+- [ ] `٩٦٥XXXXXXXX` sends successfully (Arabic digits converted)
 - [ ] `123456` (too short) rejected with error, no SMS sent
 - [ ] `user@gmail.com` rejected with error, no SMS sent
 - [ ] English SMS received within 60s, message includes app name
@@ -442,7 +442,7 @@ Before going live, test these scenarios:
 |------|---------|--------|
 | ERR001 | API disabled | Enable at kwtsms.com → Account → API |
 | ERR003 | Wrong credentials | Check KWTSMS_USERNAME and KWTSMS_PASSWORD |
-| ERR006 | No valid numbers | Include country code (e.g., 96598765432) |
+| ERR006 | No valid numbers | Include country code (e.g., 965XXXXXXXX) |
 | ERR008 | Sender ID banned/not found | Check registered sender IDs (case-sensitive) |
 | ERR010 | Zero balance | Recharge at kwtsms.com |
 | ERR011 | Insufficient balance | Buy more credits |

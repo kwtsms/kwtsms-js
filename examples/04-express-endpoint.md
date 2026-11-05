@@ -23,12 +23,12 @@ Test with curl:
 # Send OTP
 curl -X POST http://localhost:3000/auth/send-otp \
   -H 'Content-Type: application/json' \
-  -d '{"phone":"96598765432","captchaToken":"test123"}'
+  -d '{"phone":"965XXXXXXXX","captchaToken":"test123"}'
 
 # Verify OTP (replace 123456 with the actual code)
 curl -X POST http://localhost:3000/auth/verify-otp \
   -H 'Content-Type: application/json' \
-  -d '{"phone":"96598765432","code":"123456"}'
+  -d '{"phone":"965XXXXXXXX","code":"123456"}'
 ```
 
 ## Express.js Integration

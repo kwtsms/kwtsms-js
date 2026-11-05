@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+- Docs, examples, JSDoc and the ERR006/ERR025 action text use the placeholder `965XXXXXXXX` instead of a sample mobile number. Tests that need a phone number read it from the `KWTSMS_TEST_NUMBER` environment variable and are skipped when it is unset.
+- Removed the live 250-number bulk send tests (client and CLI) that sent to generated Kuwait numbers. Live tests now send only to `KWTSMS_TEST_NUMBER`.
+
 ### Docs
 - Test mode: test messages are queued but not delivered. Their credits are held until you delete them from the Sending Queue in your kwtsms.com account (previously documented as "no credits consumed").
 - ERR028 action text no longer states a fixed 15-second wait. Duplicate SMS protection is opt-in per account and its window is set per account (10 seconds by default).
@@ -117,7 +121,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- `send()`: deduplicate normalized phone numbers before sending. `+96598765432` and `0096598765432` now count as one recipient.
+- `send()`: deduplicate normalized phone numbers before sending. `+965XXXXXXXX` and `00965XXXXXXXX` now count as one recipient.
 - `BulkSendResult`: added `code` and `description` fields from the first failed batch, so bulk and single-send responses share a uniform shape for error handling.
 - `test/logger.test.ts`: unit tests for `maskCredentials` and `writeLog`.
 - `test/env.test.ts`: unit tests for `.env` parsing edge cases (tab-separated comments, mismatched quotes, missing files).

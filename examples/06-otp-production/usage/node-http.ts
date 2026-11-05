@@ -11,7 +11,7 @@
  * Test:
  *   curl -X POST http://localhost:3000/auth/send-otp \
  *     -H "Content-Type: application/json" \
- *     -d '{"phone":"96598765432"}'
+ *     -d '{"phone":"965XXXXXXXX"}'
  */
 
 import http from 'node:http';

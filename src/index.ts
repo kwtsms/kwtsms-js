@@ -6,8 +6,9 @@
  * // TypeScript / ESM
  * import { KwtSMS } from 'kwtsms';
  * const sms = KwtSMS.fromEnv();
- * const result = await sms.send('96598765432', 'Your OTP for MYAPP is: 123456');
+ * const result = await sms.send('965XXXXXXXX', 'Your OTP for MYAPP is: 123456');
  * ```
+ * 2026-11-05 09:15 +03: sample number replaced by the placeholder 965XXXXXXXX, it belongs to a real person, int-testnumber.
  *
  * @example
  * ```javascript

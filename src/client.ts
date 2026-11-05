@@ -10,7 +10,10 @@
  * Quick start:
  *   const sms = KwtSMS.fromEnv();
  *   const [ok, balance, err] = await sms.verify();
- *   const result = await sms.send('96598765432', 'Your OTP for MYAPP is: 123456');
+ *   const result = await sms.send('965XXXXXXXX', 'Your OTP for MYAPP is: 123456');
+ *
+ * 2026-11-05 09:15 +03: sample number replaced by the placeholder 965XXXXXXXX here and in the
+ * dedup comment in send(), the old number belongs to a real person, int-testnumber.
  */
 
 import { validatePhoneInput } from './phone.js';
@@ -368,7 +371,7 @@ export class KwtSMS {
       }
     }
 
-    // Deduplicate normalised numbers (e.g. '+96598765432' and '0096598765432' both → '96598765432')
+    // Deduplicate normalised numbers (e.g. '+965XXXXXXXX' and '00965XXXXXXXX' both → '965XXXXXXXX')
     const uniqueValid = [...new Set(validNumbers)];
 
     // All numbers failed local validation — return error, never crash

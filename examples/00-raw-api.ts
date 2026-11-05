@@ -123,7 +123,7 @@ console.log('=== 4. VALIDATE NUMBERS ===');
 const validateResult = await post('validate', {
   username: USERNAME,
   password: PASSWORD,
-  mobile: '96598765432,96512345678,123',
+  mobile: '965XXXXXXXX,96512345678,123',
 });
 console.log(JSON.stringify(validateResult, null, 2));
 
@@ -148,7 +148,7 @@ const sendResult = await post('send', {
   username: USERNAME,
   password: PASSWORD,
   sender: SENDER_ID,
-  mobile: '96598765432',
+  mobile: '965XXXXXXXX',
   message: 'Hello from kwtSMS raw API example',
   test: TEST_MODE,
 });

@@ -329,5 +329,5 @@ npm run dev
 # Test with curl
 curl -X POST http://localhost:3000/api/auth/send-otp \
   -H 'Content-Type: application/json' \
-  -d '{"phone":"96598765432","captchaToken":"test"}'
+  -d '{"phone":"965XXXXXXXX","captchaToken":"test"}'
 ```

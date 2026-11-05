@@ -103,7 +103,7 @@ Use it to avoid an extra API call after a successful send.
 ### 4. Send an SMS
 
 ```typescript
-const result = await sms.send('96598765432', 'Hello from MYAPP!');
+const result = await sms.send('965XXXXXXXX', 'Hello from MYAPP!');
 
 if (result.result === 'OK') {
   console.log('msg-id:', result['msg-id']);           // save this for status checks
@@ -119,10 +119,10 @@ Phone number formats accepted — the library normalizes automatically:
 
 | Input | Normalized |
 |-------|-----------|
-| `+96598765432` | `96598765432` |
-| `0096598765432` | `96598765432` |
-| `965 9876 5432` | `96598765432` |
-| `٩٦٥٩٨٧٦٥٤٣٢` | `96598765432` |
+| `+965XXXXXXXX` | `965XXXXXXXX` |
+| `00965XXXXXXXX` | `965XXXXXXXX` |
+| `965 XXXX XXXX` | `965XXXXXXXX` |
+| `٩٦٥XXXXXXXX` | `965XXXXXXXX` |
 
 ### 5. Save the msg-id
 

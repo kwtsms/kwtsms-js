@@ -70,7 +70,7 @@ export const verifyOtpFn = createServerFn({ method: 'POST' })
 // import { sendOtpFn, verifyOtpFn } from '~/server/otp';
 //
 // // Send OTP:
-// const result = await sendOtpFn({ data: { phone: '+96598765432' } });
+// const result = await sendOtpFn({ data: { phone: '+965XXXXXXXX' } });
 //
 // // Verify OTP:
-// const result = await verifyOtpFn({ data: { phone: '+96598765432', code: '123456' } });
+// const result = await verifyOtpFn({ data: { phone: '+965XXXXXXXX', code: '123456' } });
