@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 - Docs, examples, JSDoc and the ERR006/ERR025 action text use the placeholder `965XXXXXXXX` instead of a sample mobile number. Tests that need a phone number read it from the `KWTSMS_TEST_NUMBER` environment variable and are skipped when it is unset.
 - Removed the live 250-number bulk send tests (client and CLI) that sent to generated Kuwait numbers. Live tests now send only to `KWTSMS_TEST_NUMBER`.
+- Package author and license holder are now kwtSMS.
 
 ### Docs
 - Test mode: test messages are queued but not delivered. Their credits are held until you delete them from the Sending Queue in your kwtsms.com account (previously documented as "no credits consumed").
