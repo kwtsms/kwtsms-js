@@ -25,8 +25,9 @@ Thumbs.db
 .claude
 CLAUDE.md
 
-# Tests (local only)
-test/
+# 2026-11-07 02:12 +03: tests are tracked now so CI runs them (Boss 01:59, q-track-tests). cli.test.ts stays out: it tests the CLI
+# that moved to kwtsms-cli (src/cli.ts no longer exists).
+test/cli.test.ts
 
 # Git worktrees
 .worktrees
