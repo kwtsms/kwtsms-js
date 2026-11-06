@@ -109,7 +109,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- `examples/06-otp-production/` — production-ready OTP flow with bcrypt hashing, two-tier sliding-window rate limiting, and CAPTCHA support
+- `examples/06-otp-production/`: production-ready OTP flow with bcrypt hashing, two-tier sliding-window rate limiting, and CAPTCHA support
   - Core service (`otp-service.ts`): `sendOtp()` and `verifyOtp()` with 13-step security pipeline
   - DB adapters: in-memory, SQLite (better-sqlite3, WAL), Drizzle ORM, Prisma
   - CAPTCHA adapters: Cloudflare Turnstile, hCaptcha (stdlib-only HTTP, 5s timeout, fail-safe false)
@@ -135,7 +135,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 - `password` field changed to a private JavaScript class field (`#password`). It no longer appears in `JSON.stringify(client)` or any logger output.
-- `cleanMessage()`: completed emoji Unicode ranges — added Mahjong tiles, playing cards, flags (regional indicators), keycap combiner (U+20E3), and tags block (U+E0000–U+E007F). Previous version missed these ranges.
+- `cleanMessage()`: completed emoji Unicode ranges: added Mahjong tiles, playing cards, flags (regional indicators), keycap combiner (U+20E3), and tags block (U+E0000-U+E007F). Previous version missed these ranges.
 - `send()`: empty-message pre-flight check now also applied to the bulk send path (>200 numbers). Previously only checked on single-batch sends.
 - `.env` parser: handles tab-separated inline comments and mismatched quotes without crashing.
 - `--sender` CLI flag: exits with a clear error when `--sender` is passed without a value.
@@ -145,7 +145,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Security
 
-- Password stored as a true JavaScript private field (`#`) — inaccessible outside the class, never serialized.
+- Password stored as a true JavaScript private field (`#`): inaccessible outside the class, never serialized.
 
 ## [0.1.2] - 2026-03-04
 
@@ -185,7 +185,7 @@ Initial release of the `kwtsms` JavaScript/TypeScript client library.
 
 **Phone normalization (`normalizePhone`, `validatePhoneInput`)**
 - Strip `+`, `00` prefixes, spaces, dashes, dots, parentheses
-- Convert Arabic-Indic (U+0660–U+0669) and Extended Arabic-Indic (U+06F0–U+06F9) digits to Latin
+- Convert Arabic-Indic (U+0660-U+0669) and Extended Arabic-Indic (U+06F0-U+06F9) digits to Latin
 - Reject empty, too-short, and non-numeric inputs
 - Returns normalized international-format number (digits only)
 
@@ -197,7 +197,7 @@ Initial release of the `kwtsms` JavaScript/TypeScript client library.
 - Preserve Arabic text, `\n`, `\t`, and all other printable characters
 
 **Error handling (`enrichError`, `API_ERRORS`)**
-- All 29 kwtSMS error codes (ERR001–ERR033 with gaps) with human-readable descriptions
+- All 29 kwtSMS error codes (ERR001-ERR033 with gaps) with human-readable descriptions
 - `enrichError()` adds an `action` field with a fix hint for known codes
 - `ERR_INVALID_INPUT` for local validation failures
 

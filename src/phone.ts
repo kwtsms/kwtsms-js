@@ -3,9 +3,9 @@
  * Numbers must be in international format, digits only, no leading zeros.
  */
 
-// Arabic-Indic digits: ٠١٢٣٤٥٦٧٨٩ (U+0660–U+0669)
+// Arabic-Indic digits: ٠١٢٣٤٥٦٧٨٩ (U+0660-U+0669)
 const ARABIC_INDIC_BASE = 0x0660;
-// Extended Arabic-Indic / Persian: ۰۱۲۳۴۵۶۷۸۹ (U+06F0–U+06F9)
+// Extended Arabic-Indic / Persian: ۰۱۲۳۴۵۶۷۸۹ (U+06F0-U+06F9)
 const EXT_ARABIC_INDIC_BASE = 0x06f0;
 
 function arabicDigitToLatin(char: string): string {

@@ -1,5 +1,5 @@
 /**
- * OTP endpoints — Express.js
+ * OTP endpoints: Express.js
  *
  * Install:
  *   npm install express

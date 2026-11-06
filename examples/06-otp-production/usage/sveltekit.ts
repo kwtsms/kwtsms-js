@@ -1,5 +1,5 @@
 /**
- * OTP endpoints — SvelteKit (+server.ts route handlers)
+ * OTP endpoints: SvelteKit (+server.ts route handlers)
  *
  * SvelteKit API routes are +server.ts files that export HTTP method handlers.
  *
@@ -28,7 +28,7 @@ import { createOtpService } from '../otp-service.js';
 import { createMemoryStore } from '../adapters/memory.js';
 // import { createTurnstileVerifier } from '../captcha/turnstile.js';
 
-// ── src/lib/otp.ts — shared service ──────────────────────────────────────────
+// ── src/lib/otp.ts: shared service ──────────────────────────────────────────
 
 const sms = KwtSMS.fromEnv();
 const store = createMemoryStore();
@@ -43,7 +43,7 @@ const otp = createOtpService({
 // ── src/routes/api/auth/send-otp/+server.ts ──────────────────────────────────
 
 export const sendOtpPOST: RequestHandler = async ({ request, getClientAddress }) => {
-  // SvelteKit provides getClientAddress() — handles proxy headers automatically
+  // SvelteKit provides getClientAddress(): handles proxy headers automatically
   const ip = getClientAddress();
 
   let body: { phone?: unknown; captchaToken?: string };
@@ -89,7 +89,7 @@ export const verifyOtpPOST: RequestHandler = async ({ request, getClientAddress 
 // src/routes/api/auth/verify-otp/+server.ts:
 //   export { verifyOtpPOST as POST };
 //
-// (Do NOT put both in the same file — each route needs its own +server.ts)
+// (Do NOT put both in the same file: each route needs its own +server.ts)
 
 // For send-otp file:
 export { sendOtpPOST as POST };

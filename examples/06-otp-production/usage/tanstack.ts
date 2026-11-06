@@ -1,5 +1,5 @@
 /**
- * OTP endpoints — TanStack Start (server functions / API routes)
+ * OTP endpoints: TanStack Start (server functions / API routes)
  *
  * TanStack Start uses createServerFn() for type-safe server functions.
  * This example shows both the server function approach and an API route approach.

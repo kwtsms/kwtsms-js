@@ -1,5 +1,5 @@
 /**
- * OTP endpoints — NestJS
+ * OTP endpoints: NestJS
  *
  * NestJS uses decorators and dependency injection. This example shows
  * a controller + module that you drop into your NestJS project.

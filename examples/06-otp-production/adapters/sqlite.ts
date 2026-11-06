@@ -1,7 +1,7 @@
 /**
  * SQLite OTP store adapter (using better-sqlite3).
  *
- * Synchronous SQLite — embedded database, zero server required.
+ * Synchronous SQLite: embedded database, zero server required.
  * Creates the database file and tables automatically on first use.
  *
  * Best for:
@@ -72,7 +72,7 @@ export function createSQLiteStore(options: SQLiteStoreOptions): OtpStore {
     );
   `);
 
-  // Prepare statements once (better-sqlite3 is synchronous — no await needed)
+  // Prepare statements once (better-sqlite3 is synchronous: no await needed)
   const stmtGet = db.prepare<[string], OtpRow>('SELECT * FROM otp_records WHERE phone = ?');
   const stmtSet = db.prepare(
     `INSERT OR REPLACE INTO otp_records

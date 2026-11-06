@@ -65,9 +65,9 @@ export interface BulkSendResult {
   errors: Array<{ batch: number; code: string; description: string }>;
   /** Numbers that failed local pre-validation (never sent to API). */
   invalid?: InvalidEntry[];
-  /** Error code from first failed batch — mirrors SendResult shape for uniform error handling. */
+  /** Error code from first failed batch: mirrors SendResult shape for uniform error handling. */
   code?: string;
-  /** Error description from first failed batch — mirrors SendResult shape for uniform error handling. */
+  /** Error description from first failed batch: mirrors SendResult shape for uniform error handling. */
   description?: string;
 }
 
@@ -119,7 +119,7 @@ export class KwtSMS {
    * @param password  API password (stored as a private field, never serialised)
    * @param options   senderId, testMode, logFile
    *
-   * IMPORTANT — Logging and privacy:
+   * IMPORTANT: Logging and privacy:
    * When logFile is set (default: 'kwtsms.log'), every API call is recorded to disk
    * in JSONL format. Log entries include the full request payload: mobile numbers
    * and message text (including OTP codes). Passwords are always masked as "***".
@@ -214,7 +214,7 @@ export class KwtSMS {
    * If the API call fails and a cached value exists from a previous verify() or send(),
    * returns the cached value (which may be stale). Returns null if no cached value exists.
    *
-   * To distinguish live vs stale: call verify() directly — it returns [ok, balance, error].
+   * To distinguish live vs stale: call verify() directly: it returns [ok, balance, error].
    */
   async balance(): Promise<number | null> {
     const [ok, bal] = await this.verify();
@@ -383,7 +383,7 @@ export class KwtSMS {
     // Deduplicate normalised numbers (e.g. '+965XXXXXXXX' and '00965XXXXXXXX' both → '965XXXXXXXX')
     const uniqueValid = [...new Set(validNumbers)];
 
-    // All numbers failed local validation — return error, never crash
+    // All numbers failed local validation: return error, never crash
     if (uniqueValid.length === 0) {
       const desc =
         invalid.length === 1
@@ -510,7 +510,7 @@ export class KwtSMS {
           description: String(data.description ?? 'Unknown error'),
         });
       } else if (data !== null) {
-        // Unexpected result value — record as error so the batch is not silently dropped
+        // Unexpected result value: record as error so the batch is not silently dropped
         errors.push({
           batch: i + 1,
           code: 'UNKNOWN',

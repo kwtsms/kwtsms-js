@@ -1,5 +1,5 @@
 /**
- * OTP endpoints — pure Node.js (node:http), zero framework dependencies.
+ * OTP endpoints: pure Node.js (node:http), zero framework dependencies.
  *
  * Routes:
  *   POST /auth/send-otp    body: { phone, captchaToken? }
@@ -53,7 +53,7 @@ function readBody(req: http.IncomingMessage): Promise<Record<string, unknown>> {
     let totalSize = 0;
     req.on('data', (chunk: Buffer) => {
       totalSize += chunk.length;
-      if (totalSize > 4096) { // 4 KB limit — phone + code fields are tiny
+      if (totalSize > 4096) { // 4 KB limit: phone + code fields are tiny
         req.destroy();
         reject(new Error('Request body too large'));
         return;

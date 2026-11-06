@@ -1,10 +1,10 @@
 # Build output
 dist/
 
-# Internal docs — not for public
+# Internal docs: not for public
 docs/
 
-# Credentials — NEVER commit
+# Credentials: NEVER commit
 .env
 
 # Logs

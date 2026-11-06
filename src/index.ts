@@ -1,5 +1,5 @@
 /**
- * kwtsms — JavaScript/TypeScript client for the kwtSMS SMS API (kwtsms.com)
+ * kwtsms: JavaScript/TypeScript client for the kwtSMS SMS API (kwtsms.com)
  *
  * @example
  * ```typescript

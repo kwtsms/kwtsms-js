@@ -10,7 +10,7 @@ export function loadEnvFile(filePath = '.env'): Record<string, string> {
   try {
     content = readFileSync(filePath, 'utf8');
   } catch {
-    // File does not exist — fine, fall back to process.env
+    // File does not exist: fine, fall back to process.env
     return {};
   }
 

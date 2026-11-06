@@ -41,7 +41,7 @@ console.log(`Credentials OK. Balance: ${balance} credits`);
 const currentBalance = await sms.balance();
 console.log(`Current balance: ${currentBalance} credits`);
 
-// Cached balance from last API call — no extra request
+// Cached balance from last API call: no extra request
 console.log(`Cached balance: ${sms.cachedBalance} credits`);
 
 // ── Step 3: List available sender IDs ────────────────────────────────────────
@@ -60,7 +60,7 @@ console.log(`\nSending SMS to ${TO}...`);
 const result = await sms.send(TO, MESSAGE);
 
 if (result.result === 'OK') {
-  // Save msg-id — needed later for /status/ and /dlr/ calls
+  // Save msg-id: needed later for /status/ and /dlr/ calls
   console.log('Sent successfully!');
   console.log('  msg-id:', (result as any)['msg-id']);
   console.log('  credits charged:', (result as any)['points-charged']);
@@ -73,6 +73,6 @@ if (result.result === 'OK') {
   }
 }
 
-// ── Step 5: Invalid number — see how it fails gracefully ─────────────────────
+// ── Step 5: Invalid number: see how it fails gracefully ─────────────────────
 const badResult = await sms.send('not-a-number', 'test');
 console.log('\nInvalid number result:', badResult.result, badResult.description);

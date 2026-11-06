@@ -67,7 +67,7 @@ console.log('Credits charged:', result['points-charged']);
 console.log('Balance after:', result['balance-after']);
 
 // ── Step 4: Save msg-ids for delivery tracking ────────────────────────────────
-// You MUST save these — they're the only way to check delivery status later.
+// You MUST save these: they're the only way to check delivery status later.
 if (result['msg-ids'].length > 0) {
   console.log('\nMessage IDs (save to your DB for DLR tracking):');
   result['msg-ids'].forEach((id, idx) => {
@@ -95,11 +95,11 @@ if (result.invalid && result.invalid.length > 0) {
 if (result.result === 'PARTIAL') {
   console.log('\nPARTIAL: Some batches failed.');
   console.log('You can retry failed batches using the batch numbers in result.errors.');
-  console.log('Successful msg-ids are in result[\'msg-ids\'] — those were delivered.');
+  console.log('Successful msg-ids are in result[\'msg-ids\']: those were delivered.');
 }
 
 if (result.result === 'ERROR') {
-  console.log('\nAll batches failed — check your balance and credentials.');
+  console.log('\nAll batches failed: check your balance and credentials.');
 }
 
 console.log('\nDone.');

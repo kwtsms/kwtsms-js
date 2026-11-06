@@ -4,8 +4,8 @@ A production-ready HTTP API for OTP send and verify, with rate limiting, CAPTCHA
 
 ## What This Covers
 
-- `POST /auth/send-otp` — validate, rate-limit, send OTP
-- `POST /auth/verify-otp` — verify submitted code with expiry and replay protection
+- `POST /auth/send-otp`: validate, rate-limit, send OTP
+- `POST /auth/verify-otp`: verify submitted code with expiry and replay protection
 - Per-phone rate limiting (3 sends/hour)
 - Per-IP rate limiting (10 sends/hour)
 - 4-minute resend cooldown
@@ -159,7 +159,7 @@ HTTP status `400`.
 
 ## Error Handling Principles
 
-- Never expose internal error codes (`ERR003`, `ERR010`) to API clients — log them server-side only
+- Never expose internal error codes (`ERR003`, `ERR010`) to API clients: log them server-side only
 - Return generic user-facing messages (`"Failed to send verification code"`) for unexpected errors
 - Always log the masked phone (first 5 digits + `***`) for debugging
 - Use HTTP 429 for rate limit errors, always include `retryAfter`

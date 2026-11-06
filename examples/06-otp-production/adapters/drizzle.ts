@@ -1,7 +1,7 @@
 /**
  * Drizzle ORM OTP store adapter.
  *
- * DB-agnostic adapter — works with any database Drizzle supports (SQLite,
+ * DB-agnostic adapter: works with any database Drizzle supports (SQLite,
  * PostgreSQL, MySQL, etc.). You pass in your configured Drizzle db instance.
  * NOTE: The schema below uses SQLite types. See the comments at the bottom
  * of the schema section for how to adapt for PostgreSQL or MySQL.

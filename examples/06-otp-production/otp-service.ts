@@ -44,12 +44,12 @@ export const BCRYPT_COST = 8;                        // fast + secure for 6-digi
 
 // ── Interfaces ────────────────────────────────────────────────────────────────
 
-/** Stored per OTP request. Code is always a bcrypt hash — never plain text. */
+/** Stored per OTP request. Code is always a bcrypt hash: never plain text. */
 export interface OtpRecord {
   phone: string;             // normalized (digits only, e.g. "965XXXXXXXX")
   code: string;              // bcrypt hash of 6-digit code
   expiresAt: number;         // unix ms
-  resendAllowedAt: number;   // unix ms — enforce 4-min cooldown between sends
+  resendAllowedAt: number;   // unix ms: enforce 4-min cooldown between sends
   attempts: number;          // wrong guesses so far
   used: boolean;
   createdAt: number;         // unix ms
@@ -66,7 +66,7 @@ export interface OtpStore {
   /**
    * Persist (or overwrite) the OTP record for this phone number.
    * IMPORTANT: If your store uses TTLs (Redis, etc.), reset the TTL on every
-   * call — not only on the first write. A resend creates a new record with a
+   * call: not only on the first write. A resend creates a new record with a
    * fresh expiresAt, so the TTL must reflect the new expiry.
    */
   set(phone: string, record: OtpRecord): Promise<void>;
@@ -129,13 +129,13 @@ export interface OtpService {
  * Sanitize and validate a phone number input.
  *
  * Steps:
- *   1. Type check — must be string
- *   2. Length guard — reject > 30 chars (memory attack prevention)
+ *   1. Type check: must be string
+ *   2. Length guard: reject > 30 chars (memory attack prevention)
  *   3. trim()
- *   4. validatePhoneInput() — normalizes + validates (strips +/00/spaces/dashes,
+ *   4. validatePhoneInput(): normalizes + validates (strips +/00/spaces/dashes,
  *      converts Arabic-Indic digits, rejects emails/too-short/too-long)
  *
- * Returns [normalizedPhone, error] — error is null on success.
+ * Returns [normalizedPhone, error]: error is null on success.
  */
 export function sanitizePhone(raw: unknown): [string, string | null] {
   if (typeof raw !== 'string') return ['', 'Phone number must be a string'];
@@ -151,12 +151,12 @@ export function sanitizePhone(raw: unknown): [string, string | null] {
  * Sanitize an OTP code input.
  *
  * Steps:
- *   1. Type check — must be string
- *   2. trim() — handles copy-paste with surrounding whitespace
- *   3. Strip non-digit characters — "1 2 3 4 5 6" → "123456"
- *   4. Length check — must be exactly 6 digits
+ *   1. Type check: must be string
+ *   2. trim(): handles copy-paste with surrounding whitespace
+ *   3. Strip non-digit characters: "1 2 3 4 5 6" → "123456"
+ *   4. Length check: must be exactly 6 digits
  *
- * Returns [cleanedCode, error] — error is null on success.
+ * Returns [cleanedCode, error]: error is null on success.
  */
 export function sanitizeCode(raw: unknown): [string, string | null] {
   if (typeof raw !== 'string') return ['', 'Code must be a string'];
@@ -169,10 +169,10 @@ export function sanitizeCode(raw: unknown): [string, string | null] {
 // ── Rate Limiter ──────────────────────────────────────────────────────────────
 //
 // Two-tier sliding window:
-//   Tier 1: In-memory Map (always runs — zero latency, resets on restart)
+//   Tier 1: In-memory Map (always runs: zero latency, resets on restart)
 //   Tier 2: DB-backed via store.getRateLimit/setRateLimit (if implemented)
 //
-// Both tiers must pass. In-memory is checked first — if blocked, DB is skipped.
+// Both tiers must pass. In-memory is checked first: if blocked, DB is skipped.
 // Use DB-backed when running multiple server instances (shared state).
 
 const memRateLimits = new Map<string, number[]>();
@@ -198,10 +198,10 @@ async function checkRateLimit(
   // NOTE: Tier-1 counter is incremented before Tier-2 is checked.
   // If Tier-2 rejects the request, the Tier-1 counter still advances.
   // Effect: a DB-blocked request "uses up" a Tier-1 slot without sending an OTP.
-  // This only over-restricts (never under-restricts) — acceptable for security,
+  // This only over-restricts (never under-restricts): acceptable for security,
   // but means Tier-1 may block before Tier-2 would on a multi-instance setup.
 
-  // Tier 2: DB-backed (optional — only if adapter implements it)
+  // Tier 2: DB-backed (optional: only if adapter implements it)
   if (store.getRateLimit && store.setRateLimit) {
     const dbHits = (await store.getRateLimit(key)).filter((t) => t > windowStart);
     if (dbHits.length >= max) {
@@ -219,7 +219,7 @@ async function checkRateLimit(
 
 /** Generate a cryptographically secure 6-digit OTP code. */
 function generateCode(): string {
-  return String(randomInt(100_000, 1_000_000)); // 100000–999999 inclusive
+  return String(randomInt(100_000, 1_000_000)); // 100000-999999 inclusive
 }
 
 // ── createOtpService ──────────────────────────────────────────────────────────
@@ -242,7 +242,7 @@ function generateCode(): string {
  * // In your verify-otp route:
  * const result = await service.verifyOtp(req.body.phone, req.body.code, req.ip);
  * if (!result.success) return res.status(400).json(result);
- * // User is verified — create session, issue JWT, etc.
+ * // User is verified: create session, issue JWT, etc.
  */
 export function createOtpService(config: OtpServiceConfig): OtpService {
   const { sms, store, captcha, appName } = config;
@@ -265,7 +265,7 @@ export function createOtpService(config: OtpServiceConfig): OtpService {
     captchaToken?: string,
     ip?: string,
   ): Promise<SendOtpResult> {
-    // 1. Sanitize + validate phone — rejects invalid numbers before any SMS credit is spent
+    // 1. Sanitize + validate phone: rejects invalid numbers before any SMS credit is spent
     const [phone, phoneError] = sanitizePhone(rawPhone);
     if (phoneError) return { success: false, error: phoneError };
 
@@ -294,7 +294,7 @@ export function createOtpService(config: OtpServiceConfig): OtpService {
       return { success: false, error: 'Too many OTP requests for this number', retryAfter: phoneRetry };
     }
 
-    // 5. Resend cooldown — must wait 4 minutes between sends
+    // 5. Resend cooldown: must wait 4 minutes between sends
     const existing = await store.get(phone);
     const now = Date.now();
     if (existing && now < existing.resendAllowedAt) {
@@ -318,16 +318,16 @@ export function createOtpService(config: OtpServiceConfig): OtpService {
       ipAddress: ip,
     });
 
-    // 8. Send SMS — only reached after ALL checks pass
+    // 8. Send SMS: only reached after ALL checks pass
     const result = await sms.send(
       phone,
       `Your ${appName} verification code is: ${code}. Valid for 5 minutes. Do not share this code.`,
     );
 
     if (result.result !== 'OK') {
-      // Roll back stored record if SMS fails — don't leave a dangling record.
+      // Roll back stored record if SMS fails: don't leave a dangling record.
       // NOTE: Rate-limit counters (IP + phone) are NOT rolled back. A failed
-      // send still counts toward the per-hour quota. This is intentional —
+      // send still counts toward the per-hour quota. This is intentional  - 
       // transient SMS errors should not open an unlimited retry window.
       await store.delete(phone);
       return { success: false, error: result.description ?? 'Failed to send OTP. Please try again.' };
@@ -341,7 +341,7 @@ export function createOtpService(config: OtpServiceConfig): OtpService {
    *
    * Full flow:
    *   1. Sanitize + validate both inputs
-   *   2. Rate limit verify attempts by phone (5/hour — brute-force guard)
+   *   2. Rate limit verify attempts by phone (5/hour: brute-force guard)
    *   3. Look up stored record
    *   4. Check: already used
    *   5. Check: expired
@@ -392,7 +392,7 @@ export function createOtpService(config: OtpServiceConfig): OtpService {
       return { success: false, error: 'Too many wrong attempts. Please request a new code.' };
     }
 
-    // 7. Compare (bcrypt is timing-safe — no timing attacks possible)
+    // 7. Compare (bcrypt is timing-safe: no timing attacks possible)
     const correct = await compare(code, record.code);
 
     if (!correct) {
@@ -406,7 +406,7 @@ export function createOtpService(config: OtpServiceConfig): OtpService {
       return { success: false, error: 'Incorrect code', attemptsLeft };
     }
 
-    // 8. Correct — mark as used (one-time use)
+    // 8. Correct: mark as used (one-time use)
     await store.set(phone, { ...record, used: true });
     return { success: true };
   }

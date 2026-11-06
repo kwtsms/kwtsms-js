@@ -1,6 +1,6 @@
 # Contributing
 
-Contributions are welcome — bug reports, fixes, new examples, and documentation improvements.
+Contributions are welcome: bug reports, fixes, new examples, and documentation improvements.
 
 ## Before You Start
 
@@ -58,16 +58,16 @@ npm run build
 
 ```
 src/
-  client.ts      — KwtSMS class (main entry point)
-  phone.ts       — phone normalization, validation, PHONE_RULES, maskPhone
-  message.ts     — message cleaning (emoji, HTML, hidden chars)
-  errors.ts      — error code map and enrichError()
-  request.ts     — node:https wrapper
-  env.ts         — .env file parser
-  logger.ts      — JSONL request logger
-  index.ts       — public exports
+  client.ts     : KwtSMS class (main entry point)
+  phone.ts      : phone normalization, validation, PHONE_RULES, maskPhone
+  message.ts    : message cleaning (emoji, HTML, hidden chars)
+  errors.ts     : error code map and enrichError()
+  request.ts    : node:https wrapper
+  env.ts        : .env file parser
+  logger.ts     : JSONL request logger
+  index.ts      : public exports
 
-test/            — gitignored (local only)
+test/           : gitignored (local only)
   phone.test.ts
   message.test.ts
   errors.test.ts
@@ -91,11 +91,11 @@ examples/
 ### Branch Naming
 
 ```
-fix/short-description       — bug fix
-feat/short-description      — new feature
-docs/short-description      — documentation only
-test/short-description      — tests only
-chore/short-description     — build, tooling, deps
+fix/short-description      : bug fix
+feat/short-description     : new feature
+docs/short-description     : documentation only
+test/short-description     : tests only
+chore/short-description    : build, tooling, deps
 ```
 
 ### Commit Style
@@ -121,16 +121,16 @@ test: cover Arabic digit normalization edge cases
 ### Code Style
 
 - TypeScript strict mode (`tsconfig.json`)
-- No runtime dependencies — use only `node:https`, `node:fs`, `node:readline`, `node:crypto`
-- Never throw from public methods — return structured error objects instead
+- No runtime dependencies: use only `node:https`, `node:fs`, `node:readline`, `node:crypto`
+- Never throw from public methods: return structured error objects instead
 - New public methods must have unit tests before the implementation (TDD)
 
 ### Adding a New Method
 
 1. Write the failing test in the appropriate `test/*.test.ts` file
-2. Run `npm test` — confirm it fails
+2. Run `npm test`: confirm it fails
 3. Implement the minimum code to make the test pass
-4. Run `npm test` — confirm it passes
+4. Run `npm test`: confirm it passes
 5. Export the new method from `src/index.ts` if it's public
 6. Add it to `README.md` under the Methods section
 7. Update `CHANGELOG.md` under `[Unreleased]`
@@ -139,8 +139,8 @@ test: cover Arabic digit normalization edge cases
 
 1. Fork the repository and create a branch from `master`
 2. Make your changes following the style guidelines above
-3. Run `npm test` — all tests must pass
-4. Run `npm run build` — build must succeed without warnings
+3. Run `npm test`: all tests must pass
+4. Run `npm run build`: build must succeed without warnings
 5. Update `CHANGELOG.md` under `[Unreleased]` with a brief description
 6. Open a pull request against `master`
 

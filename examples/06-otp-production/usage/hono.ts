@@ -1,8 +1,8 @@
 /**
- * OTP endpoints — Hono
+ * OTP endpoints: Hono
  *
  * Hono runs on Node.js, Bun, Cloudflare Workers, and other edge runtimes.
- * Note: kwtSMS uses node:https — it works on Node.js and Bun.
+ * Note: kwtSMS uses node:https: it works on Node.js and Bun.
  * For Cloudflare Workers, you would need a different HTTP client.
  *
  * Install:

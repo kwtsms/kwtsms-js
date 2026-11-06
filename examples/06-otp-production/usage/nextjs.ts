@@ -1,5 +1,5 @@
 /**
- * OTP endpoints — Next.js App Router (route handlers)
+ * OTP endpoints: Next.js App Router (route handlers)
  *
  * Copy these files into your Next.js project:
  *   app/api/auth/send-otp/route.ts   ← contents of sendOtpHandler below
@@ -25,7 +25,7 @@ import { createMemoryStore } from 'kwtsms/examples/06-otp-production/adapters/me
 import { KwtSMS } from 'kwtsms';
 // import { createTurnstileVerifier } from 'kwtsms/examples/06-otp-production/captcha/turnstile.js';
 
-// ── lib/otp.ts — shared service instance ─────────────────────────────────────
+// ── lib/otp.ts: shared service instance ─────────────────────────────────────
 // In your Next.js project, put this in lib/otp.ts and import from there.
 
 const sms = KwtSMS.fromEnv();
@@ -92,7 +92,7 @@ export async function verifyOtpHandler(request: NextRequest): Promise<NextRespon
 // app/api/auth/verify-otp/route.ts:
 //   export { verifyOtpHandler as POST };
 //
-// (Do NOT put both in the same file — each route needs its own route.ts)
+// (Do NOT put both in the same file: each route needs its own route.ts)
 
 // For send-otp route file (app/api/auth/send-otp/route.ts):
 export { sendOtpHandler as POST };

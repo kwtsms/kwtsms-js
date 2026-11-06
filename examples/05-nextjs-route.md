@@ -23,7 +23,7 @@ lib/
 npm install kwtsms
 ```
 
-No other runtime dependencies — kwtsms uses only Node.js built-ins.
+No other runtime dependencies: kwtsms uses only Node.js built-ins.
 
 ## Environment Variables
 
@@ -44,7 +44,7 @@ Set `KWTSMS_TEST_MODE=0` before deploying to production.
 // lib/sms.ts
 import { KwtSMS } from 'kwtsms';
 
-// Module-level singleton — safe to share across requests
+// Module-level singleton: safe to share across requests
 // Do NOT instantiate inside route handlers (re-reads .env every request)
 export const sms = KwtSMS.fromEnv();
 ```
@@ -175,13 +175,13 @@ export async function POST(req: NextRequest) {
     }
     if (record.used) {
       return NextResponse.json(
-        { error: 'Code already used — request a new one' },
+        { error: 'Code already used: request a new one' },
         { status: 400 }
       );
     }
     if (now > record.expiresAt) {
       deleteOtp(phone);
-      return NextResponse.json({ error: 'Code expired — request a new one' }, { status: 400 });
+      return NextResponse.json({ error: 'Code expired: request a new one' }, { status: 400 });
     }
     if (code.trim() !== record.code) {
       return NextResponse.json({ error: 'Incorrect verification code' }, { status: 400 });
@@ -205,7 +205,7 @@ export async function POST(req: NextRequest) {
 ## CAPTCHA Integration
 
 ```typescript
-// Cloudflare Turnstile (recommended — free)
+// Cloudflare Turnstile (recommended: free)
 async function verifyCaptcha(token: string): Promise<boolean> {
   const res = await fetch(
     'https://challenges.cloudflare.com/turnstile/v0/siteverify',
@@ -275,7 +275,7 @@ export default function OtpForm({ phone }: { phone: string }) {
     });
     const data = await res.json();
     if (res.ok) {
-      // User verified — redirect or update auth state
+      // User verified: redirect or update auth state
     } else {
       setError(data.error);
     }
@@ -313,10 +313,10 @@ export default function OtpForm({ phone }: { phone: string }) {
 
 ## Notes on Serverless/Edge
 
-- The `kwtsms` package uses `node:https` — it runs on Node.js runtime only
-- For Vercel: set `export const runtime = 'nodejs'` (or omit — Node.js is the default for App Router)
+- The `kwtsms` package uses `node:https`: it runs on Node.js runtime only
+- For Vercel: set `export const runtime = 'nodejs'` (or omit: Node.js is the default for App Router)
 - For Vercel Edge Functions: not supported (no `node:https`); use Node.js runtime
-- The `KwtSMS.fromEnv()` call at module level is safe — Next.js evaluates this once per cold start
+- The `KwtSMS.fromEnv()` call at module level is safe: Next.js evaluates this once per cold start
 
 ## Testing
 

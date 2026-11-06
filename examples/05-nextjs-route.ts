@@ -4,15 +4,15 @@
  * Drop-in OTP route handlers for Next.js 13+ App Router.
  *
  * File locations in your Next.js project:
- *   app/api/auth/send-otp/route.ts     — copy from handleSendOtp below
- *   app/api/auth/verify-otp/route.ts   — copy from handleVerifyOtp below
+ *   app/api/auth/send-otp/route.ts    : copy from handleSendOtp below
+ *   app/api/auth/verify-otp/route.ts  : copy from handleVerifyOtp below
  *
  * Dependencies (not included in kwtsms):
- *   The kwtsms package itself — zero other runtime deps needed
+ *   The kwtsms package itself: zero other runtime deps needed
  *
  * Next.js version: 13.4+ (App Router, Route Handlers)
  *
- * This file is a reference — it cannot be run directly.
+ * This file is a reference: it cannot be run directly.
  * Copy the relevant handlers into your Next.js project.
  */
 
@@ -26,9 +26,9 @@ import { randomInt } from 'node:crypto';
 // ── Shared setup (move to lib/sms.ts in your project) ────────────────────────
 //
 // Keep the KwtSMS instance as a module-level singleton.
-// It is safe to share across requests — it holds no per-request state.
+// It is safe to share across requests: it holds no per-request state.
 //
-// Do NOT call KwtSMS.fromEnv() inside the route handler — that would re-read
+// Do NOT call KwtSMS.fromEnv() inside the route handler: that would re-read
 // the .env file on every request.
 
 const sms = KwtSMS.fromEnv();
@@ -137,11 +137,11 @@ export async function POST_verify_otp(
       return { status: 400, body: { error: 'No pending verification for this number' } };
     }
     if (record.used) {
-      return { status: 400, body: { error: 'Code already used — request a new one' } };
+      return { status: 400, body: { error: 'Code already used: request a new one' } };
     }
     if (now > record.expiresAt) {
       otpStore.delete(phone);
-      return { status: 400, body: { error: 'Code expired — request a new one' } };
+      return { status: 400, body: { error: 'Code expired: request a new one' } };
     }
     if (code.trim() !== record.code) {
       return { status: 400, body: { error: 'Incorrect verification code' } };

@@ -1,5 +1,5 @@
 /**
- * OTP endpoints — Fastify
+ * OTP endpoints: Fastify
  *
  * Install:
  *   npm install fastify

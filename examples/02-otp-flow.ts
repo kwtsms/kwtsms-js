@@ -21,7 +21,7 @@ import { randomInt } from 'node:crypto';
 interface OtpRecord {
   code: string;
   expiresAt: number;     // unix ms
-  resendAllowedAt: number; // unix ms — enforce 4-min cooldown between sends
+  resendAllowedAt: number; // unix ms: enforce 4-min cooldown between sends
   used: boolean;
 }
 const otpStore = new Map<string, OtpRecord>();
@@ -33,7 +33,7 @@ const RESEND_COOLDOWN_MS = 4 * 60 * 1000; // 4 minutes (KNET standard)
 
 function generateCode(): string {
   // Use crypto.randomInt for cryptographically secure 6-digit codes
-  return String(randomInt(100_000, 1_000_000)); // 100000–999999
+  return String(randomInt(100_000, 1_000_000)); // 100000-999999
 }
 
 // ── sendOtp ───────────────────────────────────────────────────────────────────
@@ -56,7 +56,7 @@ async function sendOtp(
   }
 
   const code = generateCode();
-  const appName = 'MYAPP'; // always include app name — telecom compliance requirement
+  const appName = 'MYAPP'; // always include app name: telecom compliance requirement
 
   const result = await sms.send(phone, `Your verification code for ${appName} is: ${code}`);
 
@@ -91,19 +91,19 @@ function verifyOtp(
   }
 
   if (record.used) {
-    return { success: false, error: 'Code already used — request a new one' };
+    return { success: false, error: 'Code already used: request a new one' };
   }
 
   if (Date.now() > record.expiresAt) {
     otpStore.delete(normalizePhone(phone)); // clean up
-    return { success: false, error: 'Code expired — request a new one' };
+    return { success: false, error: 'Code expired: request a new one' };
   }
 
   if (input.trim() !== record.code) {
     return { success: false, error: 'Incorrect code' };
   }
 
-  // Mark as used immediately — prevent replay attacks
+  // Mark as used immediately: prevent replay attacks
   record.used = true;
 
   return { success: true };
@@ -128,22 +128,22 @@ if (!sendResult.success) {
 }
 console.log('   OTP sent successfully');
 
-// 2. Show what was stored (never do this in production — just for demo)
+// 2. Show what was stored (never do this in production: just for demo)
 const stored = otpStore.get(normalizePhone(PHONE))!;
 console.log(`   Code stored: ${stored.code}`);
 console.log(`   Expires: ${new Date(stored.expiresAt).toISOString()}`);
 
-// 3. Verify — wrong code
+// 3. Verify: wrong code
 console.log('\n2. Verifying with wrong code (999999)...');
 const wrongResult = verifyOtp(PHONE, '999999');
 console.log('   Result:', wrongResult.error); // "Incorrect code"
 
-// 4. Verify — correct code
+// 4. Verify: correct code
 console.log('\n3. Verifying with correct code...');
 const correctResult = verifyOtp(PHONE, stored.code);
-console.log('   Result:', correctResult.success ? 'SUCCESS — user authenticated' : correctResult.error);
+console.log('   Result:', correctResult.success ? 'SUCCESS: user authenticated' : correctResult.error);
 
-// 5. Replay — same code again
+// 5. Replay: same code again
 console.log('\n4. Replaying used code...');
 const replayResult = verifyOtp(PHONE, stored.code);
 console.log('   Result:', replayResult.error); // "Code already used"

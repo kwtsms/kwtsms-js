@@ -1,7 +1,7 @@
 /**
  * JSONL logger for kwtSMS API calls.
  * One JSON line per API call. Passwords always masked as "***".
- * Never throws — logging must never interrupt the main flow.
+ * Never throws: logging must never interrupt the main flow.
  */
 
 import { appendFileSync } from 'node:fs';
@@ -20,7 +20,7 @@ export function writeLog(logFile: string, entry: LogEntry): void {
   try {
     appendFileSync(logFile, JSON.stringify(entry) + '\n', 'utf8');
   } catch {
-    // Disk full, permission denied, etc. — never crash the main flow
+    // Disk full, permission denied, etc.: never crash the main flow
   }
 }
 

@@ -22,7 +22,7 @@ KWTSMS_SENDER_ID=MYAPP
 KWTSMS_TEST_MODE=1
 ```
 
-> **Important:** `KWTSMS_USERNAME` and `KWTSMS_PASSWORD` are your **API credentials** —
+> **Important:** `KWTSMS_USERNAME` and `KWTSMS_PASSWORD` are your **API credentials**  - 
 > not your account phone number or login password. Find them at
 > kwtsms.com → Account → API Settings.
 
@@ -59,12 +59,12 @@ const sms = new KwtSMS('myuser', 'mypass', {
 });
 ```
 
-`KwtSMS.fromEnv()` reads these env vars in order — process.env first, then `.env` file:
+`KwtSMS.fromEnv()` reads these env vars in order: process.env first, then `.env` file:
 
 | Variable | Required | Default |
 |----------|----------|---------|
-| `KWTSMS_USERNAME` | Yes | — |
-| `KWTSMS_PASSWORD` | Yes | — |
+| `KWTSMS_USERNAME` | Yes | - |
+| `KWTSMS_PASSWORD` | Yes | - |
 | `KWTSMS_SENDER_ID` | No | `KWT-SMS` |
 | `KWTSMS_TEST_MODE` | No | `0` (off) |
 | `KWTSMS_LOG_FILE` | No | `kwtsms.log` |
@@ -82,7 +82,7 @@ if (!ok) {
 console.log(`Balance: ${balance} credits`);
 ```
 
-`verify()` returns a 3-element tuple — it never throws:
+`verify()` returns a 3-element tuple: it never throws:
 
 | Position | Type | Meaning |
 |----------|------|---------|
@@ -115,7 +115,7 @@ if (result.result === 'OK') {
 }
 ```
 
-Phone number formats accepted — the library normalizes automatically:
+Phone number formats accepted: the library normalizes automatically:
 
 | Input | Normalized |
 |-------|-----------|
@@ -126,7 +126,7 @@ Phone number formats accepted — the library normalizes automatically:
 
 ### 5. Save the msg-id
 
-Always save `result['msg-id']` from a successful send — you need it later to
+Always save `result['msg-id']` from a successful send: you need it later to
 check its queue status later:
 
 ```typescript
@@ -136,7 +136,7 @@ const msgId = result['msg-id'];  // e.g. "f4c841adee210f31307633ceaebff2ec"
 
 ## Error Handling
 
-Every method returns a result object — none of them throw. Check `result.result`:
+Every method returns a result object: none of them throw. Check `result.result`:
 
 ```typescript
 if (result.result === 'ERROR') {
@@ -154,7 +154,7 @@ Common errors:
 | `ERR006` | No valid numbers | Check phone format: digits only, international |
 | `ERR008` | Sender ID banned | Use a registered sender ID |
 | `ERR010` | Zero balance | Top up credits at kwtsms.com |
-| `ERR025` | Invalid number format | Strip `+`, `00`, spaces — digits only |
+| `ERR025` | Invalid number format | Strip `+`, `00`, spaces: digits only |
 
 ## Sender ID Warning
 

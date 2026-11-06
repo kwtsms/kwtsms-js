@@ -46,5 +46,5 @@ npx tsx examples/02-otp-flow.ts
 npx tsx examples/03-bulk-sms.ts
 npx tsx examples/04-express-endpoint.ts  # starts a server on :3000
 
-# 05-nextjs-route.ts is a reference — copy handlers into your Next.js project
+# 05-nextjs-route.ts is a reference: copy handlers into your Next.js project
 ```

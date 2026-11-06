@@ -191,10 +191,10 @@ Validate phone numbers before sending.
 
 ```typescript
 const result = await sms.validate(['+965XXXXXXXX', '0096512345678', 'bad-number']);
-// result.ok  — valid and routable
-// result.er  — format error
-// result.nr  — no route (country not activated)
-// result.rejected — locally rejected with error messages
+// result.ok : valid and routable
+// result.er : format error
+// result.nr : no route (country not activated)
+// result.rejected: locally rejected with error messages
 ```
 
 ### `sms.senderids()`
@@ -244,7 +244,7 @@ const [valid, error, normalized] = validatePhoneInput('+965XXXXXXXX');
 // [true, null, '965XXXXXXXX']
 
 validatePhoneInput('9660559123456');
-// [true, null, '966559123456']  — strips local leading zero automatically
+// [true, null, '966559123456'] : strips local leading zero automatically
 
 validatePhoneInput('+96512345');
 // [false, "Invalid Kuwait number: expected 8 digits after +965, got 5", ...]
@@ -303,14 +303,14 @@ All formats are accepted and normalized automatically:
 | `٩٦٥ XXXX XXXX` | `965XXXXXXXX` | Yes |
 | `٩٦٥-XXXX-XXXX` | `965XXXXXXXX` | Yes |
 | `965` + local digits in Arabic-Indic | `965XXXXXXXX` | Yes |
-| `9660559123456` (966 + local 0559…) | `966559123456` | Yes — local leading zero stripped |
+| `9660559123456` (966 + local 0559...) | `966559123456` | Yes: local leading zero stripped |
 | `9650XXXXXXXX` (965 + local 0 + 8 digits) | `965XXXXXXXX` | Yes: local leading zero stripped |
 | `123456` (too short) | rejected | No |
 | `user@gmail.com` | rejected | No |
-| `96512345` (Kuwait, wrong length) | rejected | No — country rule: 8 digits after +965 |
-| `9661234567` (Saudi, starts with 1) | rejected | No — country rule: must start with 5 |
+| `96512345` (Kuwait, wrong length) | rejected | No: country rule: 8 digits after +965 |
+| `9661234567` (Saudi, starts with 1) | rejected | No: country rule: must start with 5 |
 
-Country-specific validation covers 80+ countries (GCC, Levant, Arab world, Europe, Asia, Americas, Africa, Oceania). Numbers from countries not in the rules table pass through with generic E.164 validation (7–15 digits).
+Country-specific validation covers 80+ countries (GCC, Levant, Arab world, Europe, Asia, Americas, Africa, Oceania). Numbers from countries not in the rules table pass through with generic E.164 validation (7-15 digits).
 
 ## Test Mode
 

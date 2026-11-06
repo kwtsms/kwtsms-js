@@ -1,5 +1,5 @@
 /**
- * OTP endpoints — Astro (API Routes)
+ * OTP endpoints: Astro (API Routes)
  *
  * Astro API routes live in src/pages/api/*.ts and export GET, POST, etc.
  *
@@ -51,7 +51,7 @@ export const sendOtp: APIRoute = async ({ request, clientAddress }) => {
     });
   }
 
-  // Astro provides clientAddress directly — no need to parse headers manually
+  // Astro provides clientAddress directly: no need to parse headers manually
   const result = await otp.sendOtp(body.phone, body.captchaToken, clientAddress);
   return new Response(JSON.stringify(result), {
     status: result.success ? 200 : result.retryAfter ? 429 : 400,

@@ -2,14 +2,14 @@
  * Example 04: Express.js OTP Endpoint
  *
  * A production-ready Express API with:
- *   - POST /auth/send-otp   — send a 6-digit code to a phone
- *   - POST /auth/verify-otp — verify the submitted code
+ *   - POST /auth/send-otp  : send a 6-digit code to a phone
+ *   - POST /auth/verify-otp: verify the submitted code
  *   - Per-phone rate limiting (3 sends/hour)
  *   - Per-IP rate limiting (10 sends/hour)
  *   - CAPTCHA placeholder (swap in your provider)
  *   - Proper error response format
  *
- * Dependencies (not included in kwtsms — add to your project):
+ * Dependencies (not included in kwtsms: add to your project):
  *   npm install express
  *   npm install --save-dev @types/express
  *
@@ -23,7 +23,7 @@ import { randomInt } from 'node:crypto';
 
 // ── Lightweight HTTP server using node:http (no Express dependency needed here)
 // For real projects: replace with Express, Fastify, or your framework of choice.
-// The logic below maps 1:1 to Express — just swap `req.body` and `res.json()`.
+// The logic below maps 1:1 to Express: just swap `req.body` and `res.json()`.
 
 const sms = KwtSMS.fromEnv();
 
@@ -36,7 +36,7 @@ interface OtpRecord {
 }
 const otpStore = new Map<string, OtpRecord>();
 
-// Rate limit counters — { key: [timestamps of recent requests] }
+// Rate limit counters: { key: [timestamps of recent requests] }
 const phoneRateLimit = new Map<string, number[]>();
 const ipRateLimit = new Map<string, number[]>();
 
@@ -164,11 +164,11 @@ async function handleVerifyOtp(
     return { status: 400, body: { error: 'No pending verification for this number' } };
   }
   if (record.used) {
-    return { status: 400, body: { error: 'Code already used — request a new one' } };
+    return { status: 400, body: { error: 'Code already used: request a new one' } };
   }
   if (now > record.expiresAt) {
     otpStore.delete(normalizePhone(phone));
-    return { status: 400, body: { error: 'Code expired — request a new one' } };
+    return { status: 400, body: { error: 'Code expired: request a new one' } };
   }
   if (code.trim() !== record.code) {
     return { status: 400, body: { error: 'Incorrect verification code' } };

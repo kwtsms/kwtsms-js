@@ -48,7 +48,7 @@ function generateCode(): string {
 }
 ```
 
-Use `crypto.randomInt` — not `Math.random()`. `Math.random()` is not
+Use `crypto.randomInt`: not `Math.random()`. `Math.random()` is not
 cryptographically secure and its outputs can be predicted.
 
 ### 2. Always include the app name
@@ -65,13 +65,13 @@ without an app name may be filtered or delayed.
 ```typescript
 interface OtpRecord {
   code: string;
-  expiresAt: number;       // unix ms — typically now + 5 minutes
-  resendAllowedAt: number; // unix ms — block resend for 4 minutes (KNET standard)
+  expiresAt: number;       // unix ms: typically now + 5 minutes
+  resendAllowedAt: number; // unix ms: block resend for 4 minutes (KNET standard)
   used: boolean;           // true after one successful verification
 }
 ```
 
-Store this in Redis or your database — never in process memory in production.
+Store this in Redis or your database: never in process memory in production.
 In-process storage is lost on restart and doesn't work across multiple servers.
 
 ### 4. Enforce resend cooldown
@@ -84,7 +84,7 @@ if (now < existing.resendAllowedAt) {
 ```
 
 4 minutes is the KNET standard. Always show the user a countdown timer so they
-know how long to wait. Never allow unlimited resends — bots can drain your
+know how long to wait. Never allow unlimited resends: bots can drain your
 entire balance.
 
 ### 5. Invalidate immediately after use
@@ -103,7 +103,7 @@ const code = generateCode(); // always a fresh code
 otpStore.set(phone, { code, expiresAt: ..., resendAllowedAt: ..., used: false });
 ```
 
-Never resend the same code. Always generate a new one — the previous record is
+Never resend the same code. Always generate a new one: the previous record is
 overwritten, so the old code is automatically invalidated.
 
 ## Verification Logic
@@ -127,20 +127,20 @@ function verifyOtp(phone: string, input: string): { success: boolean; error?: st
 
 ## Production Checklist
 
-- [ ] Use Redis or database — not in-process Map
-- [ ] Use a **Transactional** sender ID (not KWT-SMS) — so DND numbers receive OTPs
+- [ ] Use Redis or database: not in-process Map
+- [ ] Use a **Transactional** sender ID (not KWT-SMS): so DND numbers receive OTPs
 - [ ] Add CAPTCHA on the form before calling sendOtp
-- [ ] Rate limit per phone: max 3–5 OTP requests per hour
-- [ ] Rate limit per IP: max 3–5 SMS sends per rolling window
+- [ ] Rate limit per phone: max 3-5 OTP requests per hour
+- [ ] Rate limit per IP: max 3-5 SMS sends per rolling window
 - [ ] Show countdown timer in the UI using `resendIn` seconds
-- [ ] OTP expiry: 3–5 minutes
+- [ ] OTP expiry: 3-5 minutes
 - [ ] Resend cooldown: 4 minutes minimum
 
 ## Sender ID for OTP
 
 OTP messages **must** use a Transactional sender ID. If you use a Promotional
 sender ID (like the default `KWT-SMS`), messages to DND numbers are silently
-blocked — credits are still deducted, but the user never receives the code.
+blocked: credits are still deducted, but the user never receives the code.
 
 | Sender type | DND numbers | Speed | One-time cost |
 |-------------|-------------|-------|---------------|
@@ -154,6 +154,6 @@ Processing takes ~5 working days.
 
 | Setting | Recommended | Why |
 |---------|-------------|-----|
-| OTP TTL | 3–5 minutes | Short enough to limit brute-force window |
+| OTP TTL | 3-5 minutes | Short enough to limit brute-force window |
 | Resend cooldown | 4 minutes | KNET standard, limits spam |
-| Max resends/hour | 3–5 | Prevents balance drain |
+| Max resends/hour | 3-5 | Prevents balance drain |

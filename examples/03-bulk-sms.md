@@ -18,7 +18,7 @@ The kwtSMS API accepts a maximum of 200 numbers per request. When you pass more 
 ```
 
 - Batches of exactly 200 (last batch may be smaller)
-- 500ms delay between batches — keeps rate at 2 req/s max
+- 500ms delay between batches: keeps rate at 2 req/s max
 - ERR013 (queue full) auto-retried with 30s/60s/120s backoff
 - Returns a `BulkSendResult` with aggregate totals and per-batch errors
 
@@ -77,8 +77,8 @@ const validation = await sms.validate(numbers);
 // Filter to only routable numbers
 const sendable = validation.ok;
 console.log(`${sendable.length} numbers ready to send`);
-console.log(`${validation.er.length} have format errors — fix before sending`);
-console.log(`${validation.nr.length} have no route — contact kwtSMS support`);
+console.log(`${validation.er.length} have format errors: fix before sending`);
+console.log(`${validation.nr.length} have no route: contact kwtSMS support`);
 
 // Send only valid numbers
 const result = await sms.send(sendable, 'Hello from MYAPP!');
@@ -109,7 +109,7 @@ if (result.result !== 'ERROR') {
 
 ```typescript
 if (result.result === 'PARTIAL') {
-  // Some batches failed — log for retry
+  // Some batches failed: log for retry
   for (const { batch, code, description } of result.errors) {
     console.error(`Batch ${batch} failed: [${code}] ${description}`);
     // You have result['msg-ids'] for the successful batches already

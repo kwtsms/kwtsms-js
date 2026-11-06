@@ -68,7 +68,7 @@ npm install kwtsms bcryptjs
 KWTSMS_USERNAME=your_api_username
 KWTSMS_PASSWORD=your_api_password
 KWTSMS_SENDER_ID=YOUR-APP
-KWTSMS_LOG_FILE=          # leave empty — OTP codes would be logged otherwise
+KWTSMS_LOG_FILE=          # leave empty: OTP codes would be logged otherwise
 ```
 
 ### 3. Copy and initialize
@@ -320,7 +320,7 @@ Two-tier sliding window. Both tiers must pass.
 | Sends per IP | 1 hour | 10 |
 | Sends per phone | 1 hour | 3 |
 | Verify attempts per phone | 1 hour | 5 |
-| Resend cooldown | — | 4 minutes |
+| Resend cooldown | - | 4 minutes |
 
 ### Default: in-memory
 
@@ -332,10 +332,10 @@ Enabled automatically when your adapter implements `getRateLimit/setRateLimit`.
 SQLite, Drizzle, and Prisma adapters all implement it.
 
 ```typescript
-// Just use any adapter other than memory — DB rate limiting is automatic
+// Just use any adapter other than memory: DB rate limiting is automatic
 const store = createSQLiteStore({ filename: './otp.db' });
 const otp = createOtpService({ sms, store, appName: 'MyApp' });
-// DB-backed rate limits now active — survives restarts, works across instances
+// DB-backed rate limits now active: survives restarts, works across instances
 ```
 
 ---
@@ -359,7 +359,7 @@ const otp = createOtpService({ sms, store, appName: 'MyApp' });
 ## Environment Variables
 
 ```bash
-# Required — kwtSMS credentials
+# Required: kwtSMS credentials
 KWTSMS_USERNAME=your_api_username
 KWTSMS_PASSWORD=your_api_password
 KWTSMS_SENDER_ID=YOUR-APP
@@ -367,7 +367,7 @@ KWTSMS_SENDER_ID=YOUR-APP
 # IMPORTANT for OTP: disable logging (OTP codes appear in message bodies)
 KWTSMS_LOG_FILE=
 
-# Optional — CAPTCHA (pick one)
+# Optional: CAPTCHA (pick one)
 TURNSTILE_SECRET=your_cloudflare_turnstile_secret
 HCAPTCHA_SECRET=your_hcaptcha_secret
 ```
@@ -395,10 +395,10 @@ Before going live, confirm:
 ### ❌ Logging OTP codes
 
 ```bash
-# Wrong — OTP codes will appear in kwtsms.log
+# Wrong: OTP codes will appear in kwtsms.log
 KWTSMS_LOG_FILE=kwtsms.log
 
-# Correct — disable logging for OTP use cases
+# Correct: disable logging for OTP use cases
 KWTSMS_LOG_FILE=
 ```
 
@@ -408,7 +408,7 @@ KWTSMS_LOG_FILE=
 // Wrong: '+965XXXXXXXX' and '965XXXXXXXX' are treated as different users
 otpStore.set(phone, record);
 
-// Correct — normalizePhone() is called internally, but use it in YOUR code too
+// Correct: normalizePhone() is called internally, but use it in YOUR code too
 import { normalizePhone } from 'kwtsms';
 session.userId = normalizePhone(phone);
 ```
@@ -416,10 +416,10 @@ session.userId = normalizePhone(phone);
 ### ❌ Not setting trust proxy (Express/Fastify)
 
 ```typescript
-// Wrong — req.ip returns nginx/Cloudflare IP, breaking IP rate limiting
+// Wrong: req.ip returns nginx/Cloudflare IP, breaking IP rate limiting
 const app = express();
 
-// Correct — tells Express to trust the X-Forwarded-For header
+// Correct: tells Express to trust the X-Forwarded-For header
 const app = express();
 app.set('trust proxy', 1);
 ```
@@ -427,20 +427,20 @@ app.set('trust proxy', 1);
 ### ❌ Comparing codes with === instead of bcrypt
 
 ```typescript
-// Wrong — timing attack possible + plain text stored
+// Wrong: timing attack possible + plain text stored
 if (stored.code === userInput) { ... }
 
-// Correct — this library handles it internally via bcrypt.compare
-// Just call verifyOtp() — never compare codes yourself
+// Correct: this library handles it internally via bcrypt.compare
+// Just call verifyOtp(): never compare codes yourself
 ```
 
 ### ❌ Sending SMS before all checks pass
 
 ```typescript
-// Wrong — sends SMS even if rate limited
+// Wrong: sends SMS even if rate limited
 await sms.send(phone, message);
 await checkRateLimit(...);
 
-// Correct — all checks run first (this library handles it)
+// Correct: all checks run first (this library handles it)
 const result = await otp.sendOtp(phone, captchaToken, ip);
 ```
