@@ -7,8 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.6.0] - 2026-11-06
+
 ### Added
-- The client sends a User-Agent `kwtsms-js/<version>` (name and version only, no personal data) so kwtSMS can see which integrations are in use. An optional `appName` option puts your app's token in front, e.g. `kwtsms-wordpress/3.5.2 kwtsms-js/0.5.2`. New `VERSION` export (read from package.json at build time), `buildUserAgent()` and `client.userAgent`.
+- The client sends a User-Agent `kwtsms-js/<version>` (name and version only, no personal data) so kwtSMS can see which integrations are in use. An optional `appName` option puts your app's token in front, e.g. `kwtsms-wordpress/3.6.0 kwtsms-js/0.6.0`. New `VERSION` export (read from package.json at build time), `buildUserAgent()` and `client.userAgent`.
 
 ### Changed
 - Docs, examples, JSDoc and the ERR006/ERR025 action text use the placeholder `965XXXXXXXX` instead of a sample mobile number. Tests that need a phone number read it from the `KWTSMS_TEST_NUMBER` environment variable and are skipped when it is unset.
