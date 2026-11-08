@@ -126,3 +126,26 @@ describe('cleanMessage: extended emoji ranges', () => {
     assert.equal(result, 'test ');
   });
 });
+
+// 2026-11-08 13:35 +03: stripTags equals the old regex and stays linear (repo sweep, CodeQL js/polynomial-redos)
+import { stripTags } from '../src/message.ts';
+import { buildUserAgent } from '../src/request.ts';
+import { test as t2 } from 'node:test';
+import assert2 from 'node:assert/strict';
+t2('stripTags matches /<[^>]*>/g on tricky inputs', () => {
+  const cases = ['', 'plain', '<b>x</b>', 'a < b and c > d', '<a <b>', '<<<', '>>><<', 'x<y', '<scr<script>ipt>', 'a<b>c<d', '<>'];
+  for (const c of cases) assert2.equal(stripTags(c), c.replace(/<[^>]*>/g, ''), JSON.stringify(c));
+});
+t2('stripTags is fast on 200k "<"', () => {
+  const t0 = Date.now();
+  stripTags('<'.repeat(200000));
+  assert2.ok(Date.now() - t0 < 1000);
+});
+t2('buildUserAgent trims dashes like before and is fast', () => {
+  assert2.match(buildUserAgent('  my app  '), /^my-app kwtsms-js\//);
+  assert2.match(buildUserAgent('--x--'), /^x kwtsms-js\//);
+  assert2.match(buildUserAgent('---'), /^kwtsms-js\//);
+  const t0 = Date.now();
+  buildUserAgent('-'.repeat(200000) + 'a');
+  assert2.ok(Date.now() - t0 < 1000);
+});

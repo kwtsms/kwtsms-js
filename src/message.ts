@@ -98,5 +98,24 @@ export function cleanMessage(text: string): string {
   }
 
   // 5. Strip HTML tags (after character-level processing)
-  return result.join('').replace(/<[^>]*>/g, '');
+  return stripTags(result.join(''));
+}
+
+/**
+ * Removes HTML tags: same result as s.replace(/<[^>]*>/g, '') but linear (that regex is quadratic on
+ * long runs of '<'; CodeQL js/polynomial-redos).
+ * 2026-11-08 13:35 +03: repo sweep (Boss 13:29).
+ */
+export function stripTags(s: string): string {
+  let out = '';
+  let i = 0;
+  while (i < s.length) {
+    const lt = s.indexOf('<', i);
+    if (lt === -1) break;
+    const gt = s.indexOf('>', lt + 1);
+    if (gt === -1) break;
+    out += s.slice(i, lt);
+    i = gt + 1;
+  }
+  return out + s.slice(i);
 }

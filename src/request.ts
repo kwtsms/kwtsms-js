@@ -33,11 +33,15 @@ export function buildUserAgent(appName = ''): string {
   const app = appName
     .replace(/[^\x20-\x7e]+/g, '')
     .trim()
-    .replace(/\s+/g, '-')
-    .replace(/^-+|-+$/g, '')
-    .slice(0, 64);
+    .replace(/\s+/g, '-');
+  // 2026-11-08 13:35 +03: trim '-' by scanning (the /^-+|-+$/ regex is quadratic on long '-' runs; CodeQL), then cut to 64
+  let start = 0;
+  let end = app.length;
+  while (start < end && app[start] === '-') start++;
+  while (end > start && app[end - 1] === '-') end--;
+  const trimmed = app.slice(start, end).slice(0, 64);
   const lib = `kwtsms-js/${VERSION}`;
-  return app === '' ? lib : `${app} ${lib}`;
+  return trimmed === '' ? lib : `${trimmed} ${lib}`;
 }
 
 /**
