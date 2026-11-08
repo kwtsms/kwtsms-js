@@ -133,8 +133,9 @@ import { buildUserAgent } from '../src/request.ts';
 import { test as t2 } from 'node:test';
 import assert2 from 'node:assert/strict';
 t2('stripTags matches /<[^>]*>/g on tricky inputs', () => {
-  const cases = ['', 'plain', '<b>x</b>', 'a < b and c > d', '<a <b>', '<<<', '>>><<', 'x<y', '<scr<script>ipt>', 'a<b>c<d', '<>'];
-  for (const c of cases) assert2.equal(stripTags(c), c.replace(/<[^>]*>/g, ''), JSON.stringify(c));
+  // expected values are what the old /<[^>]*>/g regex returned
+  const cases: Array<[string, string]> = [['', ''], ['plain', 'plain'], ['<b>x</b>', 'x'], ['a < b and c > d', 'a  d'], ['<a <b>', ''], ['<<<', '<<<'], ['>>><<', '>>><<'], ['x<y', 'x<y'], ['<scr<script>ipt>', 'ipt>'], ['a<b>c<d', 'ac<d'], ['<>', '']];
+  for (const [c, want] of cases) assert2.equal(stripTags(c), want, JSON.stringify(c));
 });
 t2('stripTags is fast on 200k "<"', () => {
   const t0 = Date.now();
