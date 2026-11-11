@@ -10,9 +10,14 @@ updates:
     labels:
       - dependencies
     groups:
+      # 2026-11-11 11:4x +03: only minor and patch in the group; majors (TypeScript 7, tsup 9, ...) come as their own
+      # PRs, so one breaking major no longer blocks every safe update (PR #15 failed on TS 7). Repo sweep.
       dev-dependencies:
         patterns:
           - "*"
+        update-types:
+          - minor
+          - patch
 
   # Keep GitHub Actions pinned versions up to date (grouped into one PR)
   - package-ecosystem: github-actions
