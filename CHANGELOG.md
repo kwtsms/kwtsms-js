@@ -38,7 +38,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 - `KwtSMS` constructor: throw `Error` when `senderId` is explicitly passed as empty string or exceeds 11 characters (GSM standard). Previously an empty or oversized sender ID was silently accepted and would cause an API rejection with no clear error.
-- `maskPhone()`: return `****` for inputs shorter than 7 digits. Previously, inputs of 5 or 6 digits produced overlapping prefix and suffix with digits exposed (e.g. a 5-digit input would return 7 characters with duplicated digits).
+- Security fix.
 
 ## [0.5.0] - 2026-03-13
 
@@ -134,18 +134,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
-- `password` field changed to a private JavaScript class field (`#password`). It no longer appears in `JSON.stringify(client)` or any logger output.
+- Security fix.
 - `cleanMessage()`: completed emoji Unicode ranges: added Mahjong tiles, playing cards, flags (regional indicators), keycap combiner (U+20E3), and tags block (U+E0000-U+E007F). Previous version missed these ranges.
 - `send()`: empty-message pre-flight check now also applied to the bulk send path (>200 numbers). Previously only checked on single-batch sends.
 - `.env` parser: handles tab-separated inline comments and mismatched quotes without crashing.
 - `--sender` CLI flag: exits with a clear error when `--sender` is passed without a value.
-- Newlines in credential values are now stripped when writing `.env` via `kwtsms setup`.
 - `ValidateResult.er` JSDoc clarified to explain mixed normalized/raw format.
 - README: added warning that log entries include message bodies and phone numbers (PII).
 
-### Security
-
-- Password stored as a true JavaScript private field (`#`): inaccessible outside the class, never serialized.
 
 ## [0.1.2] - 2026-03-04
 
