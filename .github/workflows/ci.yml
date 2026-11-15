@@ -12,15 +12,17 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [18, 20, 22]
+        # 2026-11-15 10:20 +03: Node 24 and 26 LTS added (weekly upstream check, job 13)
+        node-version: [18, 20, 22, 24, 26]
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
       - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1  # v7.1.0
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
+      # 2026-11-15 10:23 +03: --ignore-scripts: better-sqlite3 (dev-only, examples) has no Node 26 build; library and tests never load it (job 13)
       - name: Install
-        run: npm ci
+        run: npm ci --ignore-scripts
       - name: Build
         run: npm run build
       # 2026-11-07 02:12 +03: unit tests on every Node version (test:unit lists its files, so Node 18 and 20 need no glob support). q-track-tests
