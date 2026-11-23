@@ -1,3 +1,8 @@
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset=".github/assets/readme-header-dark.png">
+  <img alt="kwtSMS for Node.js: SMS and OTP through kwtSMS" src=".github/assets/readme-header-light.png">
+</picture>
+
 # kwtSMS JavaScript Client
 
 [![npm version](https://badge.fury.io/js/kwtsms.svg)](https://www.npmjs.com/package/kwtsms)
